@@ -120,8 +120,10 @@ export interface MediaResponse {
 export class WordPressService2 {
   private readonly API_BASE = 'https://www.staging2.bailliesmarquees.co.uk/wp-json/wp/v2';
   private readonly SITE_URL = 'https://www.staging2.bailliesmarquees.co.uk';
- 
-  constructor(private http: HttpClient) {}
+  private readonly USERNAME = 'mmalik15';
+  private readonly APP_PASSWORD = 'xY3D 2can Bbgq L7EA Kbun uUgb';
+
+  constructor(private http: HttpClient) { }
 
   // ============================================
   // PAGES
@@ -321,136 +323,136 @@ export class WordPressService2 {
   }
 
   // ============================================
-// MEDIA METHODS
-// ============================================
+  // MEDIA METHODS
+  // ============================================
 
-/**
- * Get all media items
- */
-getMedia(params?: {
-  per_page?: number;
-  page?: number;
-  search?: string;
-  media_type?: 'image' | 'video' | 'file';
-  mime_type?: string;
-}): Observable<MediaItem[]> {
-  const queryParams = new URLSearchParams({
-    per_page: (params?.per_page || 100).toString(),
-    _fields: 'id,title,alt_text,caption,description,media_type,mime_type,source_url,media_details'
-  });
+  /**
+   * Get all media items
+   */
+  getMedia(params?: {
+    per_page?: number;
+    page?: number;
+    search?: string;
+    media_type?: 'image' | 'video' | 'file';
+    mime_type?: string;
+  }): Observable<MediaItem[]> {
+    const queryParams = new URLSearchParams({
+      per_page: (params?.per_page || 100).toString(),
+      _fields: 'id,title,alt_text,caption,description,media_type,mime_type,source_url,media_details'
+    });
 
-  if (params?.page) queryParams.append('page', params.page.toString());
-  if (params?.search) queryParams.append('search', params.search);
-  if (params?.media_type) queryParams.append('media_type', params.media_type);
-  if (params?.mime_type) queryParams.append('mime_type', params.mime_type);
+    if (params?.page) queryParams.append('page', params.page.toString());
+    if (params?.search) queryParams.append('search', params.search);
+    if (params?.media_type) queryParams.append('media_type', params.media_type);
+    if (params?.mime_type) queryParams.append('mime_type', params.mime_type);
 
-  const url = `${this.API_BASE}/media?${queryParams}`;
+    const url = `${this.API_BASE}/media?${queryParams}`;
 
-  return this.http.get<MediaResponse[]>(url).pipe(
-    map(items => items.map(item => this.transformMediaItem(item))),
-    catchError(() => of([]))
-  );
-}
+    return this.http.get<MediaResponse[]>(url).pipe(
+      map(items => items.map(item => this.transformMediaItem(item))),
+      catchError(() => of([]))
+    );
+  }
 
-/**
- * Get specific media items by IDs
- */
-getMediaByIds(ids: number[]): Observable<MediaItem[]> {
-  if (ids.length === 0) return of([]);
+  /**
+   * Get specific media items by IDs
+   */
+  getMediaByIds(ids: number[]): Observable<MediaItem[]> {
+    if (ids.length === 0) return of([]);
 
-  const url = `${this.API_BASE}/media?include=${ids.join(',')}&_fields=id,title,alt_text,caption,description,media_type,mime_type,source_url,media_details`;
+    const url = `${this.API_BASE}/media?include=${ids.join(',')}&_fields=id,title,alt_text,caption,description,media_type,mime_type,source_url,media_details`;
 
-  return this.http.get<MediaResponse[]>(url).pipe(
-    map(items => items.map(item => this.transformMediaItem(item))),
-    catchError(() => of([]))
-  );
-}
+    return this.http.get<MediaResponse[]>(url).pipe(
+      map(items => items.map(item => this.transformMediaItem(item))),
+      catchError(() => of([]))
+    );
+  }
 
-/**
- * Get single media item by ID
- */
-getMediaById(id: number): Observable<MediaItem | null> {
-  const url = `${this.API_BASE}/media/${id}?_fields=id,title,alt_text,caption,description,media_type,mime_type,source_url,media_details`;
+  /**
+   * Get single media item by ID
+   */
+  getMediaById(id: number): Observable<MediaItem | null> {
+    const url = `${this.API_BASE}/media/${id}?_fields=id,title,alt_text,caption,description,media_type,mime_type,source_url,media_details`;
 
-  return this.http.get<MediaResponse>(url).pipe(
-    map(item => this.transformMediaItem(item)),
-    catchError(() => of(null))
-  );
-}
+    return this.http.get<MediaResponse>(url).pipe(
+      map(item => this.transformMediaItem(item)),
+      catchError(() => of(null))
+    );
+  }
 
-/**
- * Search media by name/title
- */
-searchMedia(searchTerm: string, mediaType?: 'image' | 'video'): Observable<MediaItem[]> {
-  return this.getMedia({
-    search: searchTerm,
-    media_type: mediaType,
-    per_page: 50
-  });
-}
+  /**
+   * Search media by name/title
+   */
+  searchMedia(searchTerm: string, mediaType?: 'image' | 'video'): Observable<MediaItem[]> {
+    return this.getMedia({
+      search: searchTerm,
+      media_type: mediaType,
+      per_page: 50
+    });
+  }
 
-/**
- * Get images only (filter by mime type)
- */
-getImages(params?: { per_page?: number; search?: string }): Observable<MediaItem[]> {
-  return this.getMedia({
-    ...params,
-    media_type: 'image'
-  });
-}
+  /**
+   * Get images only (filter by mime type)
+   */
+  getImages(params?: { per_page?: number; search?: string }): Observable<MediaItem[]> {
+    return this.getMedia({
+      ...params,
+      media_type: 'image'
+    });
+  }
 
-/**
- * Get images for slider (by naming convention)
- * Example: Get all images with "slider" or "hero" in the name
- */
-getSliderImages(keyword: string = 'slider'): Observable<MediaItem[]> {
-  return this.searchMedia(keyword, 'image');
-}
+  /**
+   * Get images for slider (by naming convention)
+   * Example: Get all images with "slider" or "hero" in the name
+   */
+  getSliderImages(keyword: string = 'slider'): Observable<MediaItem[]> {
+    return this.searchMedia(keyword, 'image');
+  }
 
-/**
- * Get images for specific section (by alt text or title)
- */
-getImagesByCategory(category: string): Observable<MediaItem[]> {
-  return this.searchMedia(category, 'image');
-}
+  /**
+   * Get images for specific section (by alt text or title)
+   */
+  getImagesByCategory(category: string): Observable<MediaItem[]> {
+    return this.searchMedia(category, 'image');
+  }
 
-/**
- * Transform WordPress media response to clean format
- */
-private transformMediaItem(item: MediaResponse): MediaItem {
-  return {
-    id: item.id,
-    title: this.stripHtml(item.title.rendered),
-    alt_text: item.alt_text || '',
-    caption: this.stripHtml(item.caption.rendered),
-    description: this.stripHtml(item.description.rendered),
-    media_type: item.media_type as 'image' | 'video' | 'file',
-    mime_type: item.mime_type,
-    source_url: item.source_url,
-    sizes: {
-      thumbnail: item.media_details?.sizes?.thumbnail ? {
-        source_url: item.media_details.sizes.thumbnail.source_url,
-        width: item.media_details.sizes.thumbnail.width,
-        height: item.media_details.sizes.thumbnail.height
-      } : undefined,
-      medium: item.media_details?.sizes?.medium ? {
-        source_url: item.media_details.sizes.medium.source_url,
-        width: item.media_details.sizes.medium.width,
-        height: item.media_details.sizes.medium.height
-      } : undefined,
-      large: item.media_details?.sizes?.large ? {
-        source_url: item.media_details.sizes.large.source_url,
-        width: item.media_details.sizes.large.width,
-        height: item.media_details.sizes.large.height
-      } : undefined,
-      full: {
-        source_url: item.source_url,
-        width: item.media_details?.width || 0,
-        height: item.media_details?.height || 0
+  /**
+   * Transform WordPress media response to clean format
+   */
+  private transformMediaItem(item: MediaResponse): MediaItem {
+    return {
+      id: item.id,
+      title: this.stripHtml(item.title.rendered),
+      alt_text: item.alt_text || '',
+      caption: this.stripHtml(item.caption.rendered),
+      description: this.stripHtml(item.description.rendered),
+      media_type: item.media_type as 'image' | 'video' | 'file',
+      mime_type: item.mime_type,
+      source_url: item.source_url,
+      sizes: {
+        thumbnail: item.media_details?.sizes?.thumbnail ? {
+          source_url: item.media_details.sizes.thumbnail.source_url,
+          width: item.media_details.sizes.thumbnail.width,
+          height: item.media_details.sizes.thumbnail.height
+        } : undefined,
+        medium: item.media_details?.sizes?.medium ? {
+          source_url: item.media_details.sizes.medium.source_url,
+          width: item.media_details.sizes.medium.width,
+          height: item.media_details.sizes.medium.height
+        } : undefined,
+        large: item.media_details?.sizes?.large ? {
+          source_url: item.media_details.sizes.large.source_url,
+          width: item.media_details.sizes.large.width,
+          height: item.media_details.sizes.large.height
+        } : undefined,
+        full: {
+          source_url: item.source_url,
+          width: item.media_details?.width || 0,
+          height: item.media_details?.height || 0
+        }
       }
-    }
-  };
-}
+    };
+  }
 
   // ============================================
   // UTILITIES
@@ -503,15 +505,15 @@ private transformMediaItem(item: MediaResponse): MediaItem {
   }
 
   getFooterMenu(): Observable<WordPressMenuItem[]> {
-  return this.getMenuLocation('footer').pipe(
-    switchMap(location => {
-      if (location?.menu) {
-        return this.getMenuItems(location.menu);
-      }
-      return of([]);
-    })
-  );
-}
+    return this.getMenuLocation('footer').pipe(
+      switchMap(location => {
+        if (location?.menu) {
+          return this.getMenuItems(location.menu);
+        }
+        return of([]);
+      })
+    );
+  }
 
   private stripHtml(html: string): string {
     const div = document.createElement('div');
