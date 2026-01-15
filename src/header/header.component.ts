@@ -1,34 +1,25 @@
-// header-improved.component.ts
+// header.component.ts - UPDATED with Contact Panel
 import { Component, OnInit, OnDestroy, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
 
 import { Subject, takeUntil, filter } from 'rxjs';
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { WordPressMenuItem, WordPressService2 } from '../app/wordpress.service2.service';
+import { ContactPanelComponent } from '../app/contact-panel/contact-panel.component';
+
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ContactPanelComponent], // Add ContactPanelComponent
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms ease-in', style({ opacity: 1 }))
-      ]),
-      transition(':leave', [
-        animate('300ms ease-out', style({ opacity: 0 }))
-      ])
-    ])
-  ]
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   menuItems: WordPressMenuItem[] = [];
   isMenuOpen = false;
   isScrolled = false;
+  isContactPanelOpen = false; // Add this property
   private destroy$ = new Subject<void>();
   wpService = inject(WordPressService2)
 
@@ -45,6 +36,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  /**
+   * Open contact panel
+   */
+  openContactPanel() {
+    this.isContactPanelOpen = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  /**
+   * Close contact panel (called from child component)
+   */
+  onContactPanelClose() {
+    this.isContactPanelOpen = false;
+    document.body.style.overflow = '';
   }
 
   /**
@@ -210,6 +217,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onEscapeKey() {
     if (this.isMenuOpen) {
       this.closeMenu();
+    }
+    if (this.isContactPanelOpen) {
+      this.onContactPanelClose();
     }
   }
 

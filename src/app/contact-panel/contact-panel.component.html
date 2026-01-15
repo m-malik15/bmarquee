@@ -1,0 +1,119 @@
+<!-- contact-panel.component.html -->
+<div
+  class="contact-panel-overlay"
+  *ngIf="isPanelOpen"
+  (click)="closePanel()"
+  [@fadeInOut]
+></div>
+
+<aside
+  class="contact-panel"
+  [class.open]="isPanelOpen"
+  [@slideInOut]
+>
+  <!-- Close Button -->
+  <button
+    class="close-btn"
+    (click)="closePanel()"
+    aria-label="Close contact panel"
+  >
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+
+  <!-- Panel Header -->
+  <div class="panel-header">
+    <div class="header-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+      </svg>
+    </div>
+    <h2>Get in Touch</h2>
+    <p>We're here to help with your marquee needs</p>
+  </div>
+
+  <!-- Contact Options -->
+  <div class="contact-options">
+
+    <!-- Glasgow Office -->
+    <div class="contact-card">
+      <div class="card-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        <h3>Glasgow Office</h3>
+      </div>
+      <a href="tel:01417740830" class="contact-link primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+        <span>0141 774 0830</span>
+        <div class="call-action">Call Now</div>
+      </a>
+    </div>
+
+    <!-- Edinburgh Office -->
+    <div class="contact-card">
+      <div class="card-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        <h3>Edinburgh Office</h3>
+      </div>
+      <a href="tel:01315100162" class="contact-link primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+        <span>0131 510 0162</span>
+        <div class="call-action">Call Now</div>
+      </a>
+    </div>
+
+    <!-- Emergency Contact -->
+    <div class="contact-card emergency">
+      <div class="card-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <h3>24/7 Emergency</h3>
+      </div>
+      <a href="tel:07724705815" class="contact-link emergency-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+        <span>07724 705815</span>
+        <div class="call-action">Emergency Call</div>
+      </a>
+      <p class="emergency-note">Available 24/7 for urgent marquee assistance</p>
+    </div>
+
+  </div>
+
+  <!-- Additional Info -->
+  <div class="panel-footer">
+    <div class="info-box">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </svg>
+      <div>
+        <strong>Office Hours</strong>
+        <p>Monday - Friday: 9am - 6pm<br>Saturday: 10am - 4pm</p>
+      </div>
+    </div>
+
+    <a routerLink="/free-quotation" (click)="closePanel()" class="quotation-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+      <span>Request Free Quotation</span>
+    </a>
+  </div>
+
+</aside>
