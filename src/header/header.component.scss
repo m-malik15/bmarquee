@@ -1,0 +1,529 @@
+// header.component.scss
+// OPTION 1 - Modern Minimal Luxury (Glassmorphism + Elegant 2025/2026 style)
+// Updated: January 2026 - Complete with fixed dropdowns & improved mobile
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: transparent;
+}
+
+// ────────────────────────────────────────────────
+// TOP BAR - Glassmorphism + subtle purple tint
+// ────────────────────────────────────────────────
+.top-bar {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px) saturate(185%);
+  -webkit-backdrop-filter: blur(14px) saturate(185%);
+ 
+ 
+  padding: 0.9rem 0;
+
+  .container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .top-bar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+}
+
+.action-buttons a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.35px;
+  text-decoration: none;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-call {
+  background: linear-gradient(90deg, #6f42c1 0%, #9f7aea 100%);
+  color: white;
+  box-shadow: 0 4px 18px rgba(111, 66, 193, 0.32);
+
+  &:hover {
+    transform: translateY(-3px) scale(1.035);
+    box-shadow: 0 12px 32px rgba(111, 66, 193, 0.45);
+  }
+}
+
+.btn-quote {
+  background: transparent;
+  border: 2px solid #7c3aed;
+  color: #6f42c1;
+
+  &:hover {
+    background: #6f42c1;
+    color: white;
+    transform: translateY(-3px) scale(1.035);
+    box-shadow: 0 12px 32px rgba(111, 66, 193, 0.38);
+  }
+}
+
+.social-icons {
+  display: flex;
+  gap: 0.9rem;
+}
+
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(111, 66, 193, 0.08);
+  color: #6f42c1;
+  transition: all 0.4s ease;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    background: #6f42c1;
+    color: white;
+    transform: translateY(-4px) rotate(10deg);
+    box-shadow: 0 8px 25px rgba(111, 66, 193, 0.38);
+  }
+}
+
+// ────────────────────────────────────────────────
+// MAIN HEADER
+// ────────────────────────────────────────────────
+.main-header {
+  background: #f7fbfb;
+  padding: 1.35rem 0 0.5rem 0;
+  
+  box-shadow: 0 2px 18px rgba(0,0,0,0.05);
+
+  .container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.logo img {
+  height: 62px;
+  width: auto;
+  max-width: 260px;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &:hover {
+    transform: scale(1.035);
+  }
+}
+
+// ────────────────────────────────────────────────
+// NAVIGATION - Elegant underline + hover states
+// ────────────────────────────────────────────────
+.main-nav {
+  .nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.5rem;
+  }
+
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.85rem 1.45rem;
+    color: #1f2937;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.97rem;
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    white-space: nowrap;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0.4rem;
+    left: 50%;
+    width: 0;
+    height: 2.5px;
+    background: linear-gradient(90deg, #6f42c1, #c084fc);
+    border-radius: 3px;
+    transform: translateX(-50%);
+    transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .nav-link:hover::after,
+  .nav-item.active > .nav-link::after {
+    width: 65%;
+  }
+
+  .nav-link:hover,
+  .nav-item.active > .nav-link {
+    color: #6f42c1;
+    background: rgba(111, 66, 193, 0.055);
+  }
+
+  .dropdown-icon {
+    width: 10px;
+    height: 10px;
+    opacity: 0.7;
+    transition: all 0.35s ease;
+  }
+
+  .has-dropdown:hover .dropdown-icon {
+    transform: rotate(180deg);
+    opacity: 1;
+  }
+}
+
+// ────────────────────────────────────────────────
+// DROPDOWN MENU - Complete & Modern
+// ────────────────────────────────────────────────
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 240px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.14);
+  padding: 0.6rem 0;
+  margin: 0.45rem 0 0;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 100;
+  border: 1px solid rgba(111, 66, 193, 0.12);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 20px;
+    width: 12px;
+    height: 12px;
+    background: white;
+    transform: rotate(45deg);
+    border-left: 1px solid rgba(111, 66, 193, 0.12);
+    border-top: 1px solid rgba(111, 66, 193, 0.12);
+  }
+}
+
+.has-dropdown:hover > .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  margin: 0;
+}
+
+.dropdown-link {
+  display: block;
+  padding: 0.78rem 1.6rem;
+  color: #2c3e50;
+  font-size: 0.94rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: rgba(111, 66, 193, 0.07);
+    color: #6f42c1;
+    padding-left: 1.9rem;
+  }
+}
+
+// ────────────────────────────────────────────────
+// MOBILE MENU TOGGLE & SIDEBAR
+// ────────────────────────────────────────────────
+.mobile-menu-toggle {
+  display: none;
+  border: none;
+  background: rgba(111, 66, 193, 0.09);
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background: #6f42c1;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    border-radius: 2px;
+  }
+
+  &.active {
+    background: #6f42c1;
+
+    span {
+      background: white;
+    }
+
+    span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+    span:nth-child(2) { opacity: 0; transform: translateX(-12px); }
+    span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+  }
+}
+
+// ────────────────────────────────────────────────
+// RESPONSIVE - Mobile Sidebar + Accordion Dropdowns
+// ────────────────────────────────────────────────
+@media (max-width: 991px) {
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .main-nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 320px;
+    max-width: 85vw;
+    height: 100vh;
+    background: white;
+    box-shadow: -6px 0 30px rgba(0,0,0,0.18);
+    transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    overflow-y: auto;
+    padding: 6rem 0 2rem;
+    z-index: 999;
+
+    &.open {
+      right: 0;
+    }
+
+    .nav-list {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .nav-item {
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .nav-link {
+      padding: 1.1rem 1.8rem;
+      border-radius: 0;
+      font-size: 1.02rem;
+      justify-content: space-between;
+    }
+
+    .dropdown-menu {
+      position: static;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      box-shadow: none;
+      border: none;
+      background: #f8f9fc;
+      margin: 0;
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .has-dropdown:hover > .dropdown-menu,
+    .has-dropdown.active > .dropdown-menu {
+      max-height: 800px; // ← increase if you have many submenu items
+    }
+
+    .dropdown-link {
+      padding: 0.85rem 3rem;
+      font-size: 0.96rem;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .top-bar {
+    padding: 0.75rem 0;
+  }
+
+  .action-buttons {
+    gap: 0.8rem;
+  }
+
+  .action-buttons a {
+    padding: 0.6rem 1.1rem;
+    font-size: 0.86rem;
+  }
+
+  .logo img {
+    height: 52px;
+  }
+}
+
+.top-bar {
+  background: #ffffff;
+  padding: 0.4rem 0;
+  
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  .container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .top-bar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    transition: all 0.3s ease;
+    background: #ffffff;
+    color: #6f42c1;
+    border: 2px solid #6f42c1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+    svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2.5;
+      stroke: #6f42c1;
+    }
+
+    &:hover {
+      background: #6f42c1;
+      color: #ffffff;
+      border-color: #6f42c1;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(111, 66, 193, 0.3);
+
+      svg {
+        stroke: #ffffff;
+      }
+    }
+  }
+}
+
+.social-icons {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: #6f42c1;
+    transition: all 0.2s ease;
+    border-radius: 50%;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover {
+      color: #ffffff;
+      background: #6f42c1;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(111, 66, 193, 0.25);
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .top-bar {
+    padding: 0.4rem 0;
+  }
+
+  .action-buttons {
+    gap: 0.6rem;
+  }
+
+  .action-buttons a {
+    padding: 0.5rem 1.1rem;
+    font-size: 0.813rem;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .social-icons {
+    gap: 0.5rem;
+  }
+
+  .social-icons a {
+    width: 30px;
+    height: 30px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .action-buttons a span {
+    display: none;
+  }
+
+  .action-buttons a {
+    padding: 0.55rem;
+    min-width: 38px;
+    justify-content: center;
+    border-radius: 50%;
+  }
+}

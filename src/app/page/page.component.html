@@ -1,0 +1,58 @@
+<!-- page.component.html - Enhanced version -->
+<div class="page-container" [class.loading]="isLoading">
+
+  <!-- Loading Overlay -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Loading page...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="error">
+    <h2>{{ error }}</h2>
+    <p>The page you're looking for could not be found.</p>
+    <a routerLink="/" class="btn-home">Go to Homepage</a>
+  </div>
+
+  <!-- Page Content -->
+  <div *ngIf="!error" class="page-wrapper">
+
+    <!-- Hero Slider -->
+    <app-slider
+      *ngIf="sliderImages.length > 0 && !isLoading"
+      [images]="sliderImages"
+      [autoplay]="true"
+      [speed]="5000"
+      [showCaptions]="true"
+      [showDots]="true"
+      [useSize]="'large'"
+    ></app-slider>
+
+    <!-- Page Article -->
+    <article *ngIf="page && !isLoading" class="page">
+
+      <!-- Featured Image (if no slider and has featured image) -->
+      <div *ngIf="sliderImages.length === 0 && getFeaturedImage()" class="featured-image">
+        <img
+          [src]="getFeaturedImage()!.source_url"
+          [alt]="getFeaturedImage()!.alt_text || page.title.rendered"
+          loading="lazy"
+        />
+      </div>
+
+      <!-- Page Header -->
+      <header class="page-header" *ngIf="sliderImages.length === 0">
+        <h1 [innerHTML]="page.title.rendered"></h1>
+        <div class="page-meta">
+          <time [dateTime]="page.modified">
+            Last updated: {{ page.modified | date:'MMMM d, yyyy' }}
+          </time>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="page-content" [innerHTML]="pageContent"></div>
+
+    </article>
+  </div>
+</div>

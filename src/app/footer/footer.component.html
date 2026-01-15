@@ -1,0 +1,79 @@
+<!-- footer.component.html -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div class="site-footer-wrap">
+
+    <!-- Middle Footer - Navigation -->
+    <div class="site-middle-footer-wrap site-footer-row-container">
+      <div class="site-footer-row-container-inner">
+        <div class="site-container">
+          <div class="site-middle-footer-inner-wrap">
+            <div class="site-footer-middle-section">
+
+              <!-- Footer Navigation -->
+              <div class="footer-widget-area footer-navigation-wrap">
+                <div class="footer-widget-area-inner footer-navigation-inner">
+                  <nav id="footer-navigation" class="footer-navigation" role="navigation" aria-label="Footer Navigation">
+                    <div class="footer-menu-container">
+                      <ul id="footer-menu" class="menu">
+                        <li *ngFor="let item of footerMenuItems" class="menu-item">
+                          <a [routerLink]="'/' + (item.slug === 'home' ? '' : item.slug)"
+                             [attr.rel]="item.slug === 'data-privacy-policy' ? 'privacy-policy' : null">
+                            {{ item.title }}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </nav>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Footer - Copyright & Info -->
+    <div class="site-bottom-footer-wrap site-footer-row-container">
+      <div class="site-footer-row-container-inner">
+        <div class="site-container">
+          <div class="site-bottom-footer-inner-wrap">
+            <div class="site-footer-bottom-section">
+
+              <!-- Site Info -->
+              <div class="footer-widget-area site-info">
+                <div class="footer-widget-area-inner site-info-inner">
+                  <div class="footer-html">
+                    <div class="footer-html-inner">
+                      <p class="company-details">
+                        REG OFFICE: 1 BARLANARK AVENUE, SPRINGBOIG, GLASGOW, G32 0JR •
+                        V.A.T NUMBER: 796433879 •
+                        REG NO: SC469838
+                      </p>
+                      <p class="copyright">
+                        © {{ currentYear }} Baillies Marquees
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<!-- Back to Top Button (Optional Enhancement) -->
+<button
+  class="back-to-top"
+  (click)="scrollToTop()"
+  aria-label="Back to top"
+  title="Back to top">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M18 15l-6-6-6 6"/>
+  </svg>
+</button>
