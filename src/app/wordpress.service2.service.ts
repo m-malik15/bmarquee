@@ -120,9 +120,7 @@ export interface MediaResponse {
 export class WordPressService2 {
   private readonly API_BASE = 'https://www.staging2.bailliesmarquees.co.uk/wp-json/wp/v2';
   private readonly SITE_URL = 'https://www.staging2.bailliesmarquees.co.uk';
-  private readonly USERNAME = 'mmalik15';
-  private readonly APP_PASSWORD = 'xY3D 2can Bbgq L7EA Kbun uUgb';
-
+ 
   constructor(private http: HttpClient) {}
 
   // ============================================
