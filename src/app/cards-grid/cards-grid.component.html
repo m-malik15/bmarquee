@@ -1,0 +1,7 @@
+<div class="cards-grid" [class]="'grid-cols-' + columns">
+  <app-card
+    *ngFor="let card of cards; let i = index"
+    [card]="card"
+    [animationDelay]="i * 100"
+  ></app-card>
+</div>

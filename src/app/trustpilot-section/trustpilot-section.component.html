@@ -1,0 +1,42 @@
+<section class="trustpilot-section" *ngIf="trustpilot">
+  <div class="trustpilot-container">
+
+    <h2 class="trustpilot-title">{{ trustpilot.title }}</h2>
+
+    <div class="trustpilot-widget-container">
+      <!-- TrustBox widget - List -->
+      <div
+        #trustpilotWidget
+        id="trustpilot-widget"
+        class="trustpilot-widget"
+        data-locale="en-GB"
+        data-template-id="539ad60defb9600b94d7df2c"
+        data-businessunit-id="5c1a6710da8434000155e632"
+        data-style-height="500px"
+        data-style-width="100%"
+        data-theme="light"
+        data-stars="1,2,3,4,5">
+        <!-- Fallback link while loading -->
+        <a
+          href="https://uk.trustpilot.com/review/bailliesmarquees.co.uk"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="trustpilot-fallback-link">
+          View our reviews on Trustpilot
+        </a>
+      </div>
+      <!-- End TrustBox widget -->
+    </div>
+
+    <h2 class="clients-title">{{ trustpilot.clientsTitle }}</h2>
+
+    <div class="clients-image">
+      <img
+        [src]="trustpilot.clientsImage"
+        [alt]="trustpilot.clientsImageAlt"
+        loading="lazy"
+      />
+    </div>
+
+  </div>
+</section>

@@ -1,51 +1,68 @@
-import { Component, OnInit } from '@angular/core';
-import { WordPressMenuItem, WordPressService2 } from '../wordpress.service2.service';
-import { NgFor } from '@angular/common';
-import { RouterLink } from '@angular/router';
+// footer.component.ts
+import { Component, OnInit, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+
+interface FooterMenuItem {
+  title: string;
+  slug: string;
+}
 
 @Component({
   selector: 'app-footer',
-  imports: [NgFor, RouterLink],
+  standalone: true,
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+  styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-  footerMenuItems: WordPressMenuItem[] = [];
-  currentYear = new Date().getFullYear();
+  currentYear: number = new Date().getFullYear();
+  newsletterEmail: string = '';
+  showBackToTop: boolean = false;
 
-  constructor(private wpService: WordPressService2) {}
+  footerMenuItems: FooterMenuItem[] = [
+    { title: 'Home', slug: 'home' },
+    { title: 'About Us', slug: 'about' },
+    { title: 'Our Services', slug: 'services' },
+    { title: 'Meet The Team', slug: 'team' },
+    { title: 'Latest Blog', slug: 'blog' },
+    { title: 'Contact Us', slug: 'contact' }
+  ];
 
-  ngOnInit() {
-    this.loadFooterMenu();
+  ngOnInit(): void {
+    // Component initialization
   }
 
-  private loadFooterMenu() {
-    // Try to get footer menu, fallback to hardcoded items if not available
-    this.wpService.getFooterMenu().subscribe({
-      next: (items) => {
-        this.footerMenuItems = items;
-        console.log('Footer menu loaded:', items);
-      },
-      error: (err) => {
-        console.warn('Could not load footer menu, using fallback', err);
-        this.footerMenuItems = this.getFallbackMenu();
-      }
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    // Show back to top button when scrolled down 300px
+    this.showBackToTop = window.pageYOffset > 300;
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
     });
   }
 
-  private getFallbackMenu(): WordPressMenuItem[] {
-    return [
-      { ID: 1, title: 'Free Quotation', url: '/free-quotation', slug: 'free-quotation' },
-      { ID: 2, title: 'FAQs', url: '/faqs', slug: 'faqs' },
-      { ID: 3, title: 'Blog', url: '/blog', slug: 'blog' },
-      { ID: 4, title: 'Quality & Safety', url: '/quality-safety', slug: 'quality-safety' },
-      { ID: 5, title: 'Marquee Hire Terms', url: '/marquees-hire-terms', slug: 'marquees-hire-terms' },
-      { ID: 6, title: 'Privacy Policy', url: '/data-privacy-policy', slug: 'data-privacy-policy' }
-    ];
+  onNewsletterSubmit(): void {
+    if (this.newsletterEmail && this.isValidEmail(this.newsletterEmail)) {
+      console.log('Newsletter signup:', this.newsletterEmail);
+      // Add your newsletter subscription logic here
+      // Example: this.newsletterService.subscribe(this.newsletterEmail).subscribe(...)
+
+      // Show success message (you can replace this with a proper notification service)
+      alert('Thank you for subscribing to our newsletter!');
+      this.newsletterEmail = '';
+    } else {
+      alert('Please enter a valid email address.');
+    }
   }
 
-  scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  private isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   }
-
 }

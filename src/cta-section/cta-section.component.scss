@@ -1,0 +1,112 @@
+.cta-section {
+  background: linear-gradient(135deg, #e6e2ff 0%, #f0edff 100%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='32' viewBox='0 0 16 32'%3E%3Cg fill='%23beb4cd' fill-opacity='0.045'%3E%3Cpath fill-rule='evenodd' d='M0 24h4v2H0v-2zm0 4h6v2H0v-2zm0-8h2v2H0v-2zM0 0h4v2H0V0zm0 4h2v2H0V4zm16 20h-6v2h6v-2zm0 4H8v2h8v-2zm0-8h-4v2h4v-2zm0-20h-6v2h6V0zm0 4h-4v2h4V4zm-2 12h2v2h-2v-2zm0-8h2v2h-2V8zM2 8h10v2H2V8zm0 8h10v2H2v-2zm-2-4h14v2H0v-2zm4-8h6v2H4V4zm0 16h6v2H4v-2zM6 0h2v2H6V0zm0 24h2v2H6v-2z'/%3E%3C/g%3E%3C/svg%3E");
+  padding: 4rem 1rem;
+  margin: 3rem 0;
+}
+
+.cta-container {
+  max-width: 1290px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.cta-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cta-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.cta-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #4a5568;
+  margin: 0;
+}
+
+.cta-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: #6f42c1;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(111, 66, 193, 0.3);
+  white-space: nowrap;
+
+  &:hover {
+    background: #5a33a3;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(111, 66, 193, 0.4);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .cta-container {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .cta-section {
+    padding: 3rem 1rem;
+  }
+
+  .cta-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .cta-title {
+    font-size: 1.75rem;
+  }
+
+  .cta-description {
+    font-size: 1rem;
+  }
+
+  .cta-action {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .cta-title {
+    font-size: 1.5rem;
+  }
+
+  .cta-description {
+    font-size: 0.95rem;
+  }
+
+  .cta-button {
+    padding: 0.875rem 2rem;
+    font-size: 0.95rem;
+  }
+}

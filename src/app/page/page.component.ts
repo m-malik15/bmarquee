@@ -1,4 +1,3 @@
-// page.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml, Meta, Title } from '@angular/platform-browser';
@@ -6,20 +5,42 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, Subject, takeUntil } from 'rxjs';
 import { MediaItem, WordPressPage, WordPressService2 } from '../wordpress.service2.service';
 import { SliderComponent } from '../slider/slider.component';
+import { CardsGridComponent } from '../cards-grid/cards-grid.component';
+
+import { TrustpilotSectionComponent, TrustpilotData } from '../trustpilot-section/trustpilot-section.component';
+import { CardData } from '../card/card.component';
+import { CtaData, HtmlParserService, ClientsAccreditationsData } from '../html-parser.service';
+import { CtaSectionComponent } from '../../cta-section/cta-section.component';
+import { ClientsAccreditationsComponent } from '../clients-accreditations/clients-accreditations.component';
+
 
 @Component({
   selector: 'app-page',
   standalone: true,
-  imports: [CommonModule, SliderComponent, SliderComponent],
+  imports: [CommonModule, SliderComponent, CardsGridComponent, CtaSectionComponent, TrustpilotSectionComponent, ClientsAccreditationsComponent],
   templateUrl: './page.component.html',
   styleUrl: './page.component.scss'
 })
 export class PageComponent implements OnInit, OnDestroy {
   page: WordPressPage | null = null;
-  pageContent: SafeHtml = '';
+  pageContentBefore: SafeHtml = '';
+  pageContentAfter: SafeHtml = '';
   sliderImages: MediaItem[] = [];
   isLoading = true;
   error: string | null = null;
+
+  allCards: CardData[] = [];
+  cardSections: CardData[][] = [];
+  showCards = false;
+
+  ctaSection: CtaData | null = null;
+  showCta = false;
+
+  trustpilotSection: TrustpilotData | null = null;
+  showTrustpilot = false;
+
+  clientsAccreditationsSection: ClientsAccreditationsData | null = null;
+  showClientsAccreditations = false;
 
   private destroy$ = new Subject<void>();
 
@@ -29,18 +50,16 @@ export class PageComponent implements OnInit, OnDestroy {
     private meta: Meta,
     private titleService: Title,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private htmlParser: HtmlParserService
   ) {}
 
   ngOnInit() {
-    // Listen to route parameter changes
     this.route.params
       .pipe(takeUntil(this.destroy$))
       .subscribe(params => {
-        const slug = params['slug'] || ''; // Get slug from route, empty = home
+        const slug = params['slug'] || '';
         this.loadPage(slug);
-
-        // Scroll to top when page changes
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
   }
@@ -54,30 +73,56 @@ export class PageComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.error = null;
 
-    // Determine slider images based on page
     const sliderObservable = this.getSliderForPage(slug);
 
-    // Load both page content AND slider images in parallel
     forkJoin({
       pageData: this.wpService.getPage(slug),
       sliderImages: sliderObservable
     }).subscribe({
       next: ({ pageData, sliderImages }) => {
-        // Set page data
         this.page = pageData.page;
-        this.pageContent = this.sanitizer.bypassSecurityTrustHtml(pageData.cleanContent);
 
-        // Set slider images
+        let cleanContent = pageData.cleanContent;
+
+        // Extract cards
+        this.showCards = this.shouldShowCards(slug);
+        if (this.showCards) {
+          this.allCards = this.htmlParser.parseCardsFromContent(cleanContent);
+          this.cardSections = this.htmlParser.splitCardsIntoSections(this.allCards, 3);
+          cleanContent = this.htmlParser.removeCardsFromContent(cleanContent);
+        }
+
+        // Extract CTA and split content
+        this.showCta = this.shouldShowCta(slug);
+        if (this.showCta) {
+          this.ctaSection = this.htmlParser.extractCtaSection(cleanContent);
+          const sections = this.htmlParser.splitContentAtCta(cleanContent);
+
+          // Extract Trustpilot from after content
+          this.showTrustpilot = this.shouldShowTrustpilot(slug);
+          if (this.showTrustpilot) {
+            this.trustpilotSection = this.htmlParser.extractTrustpilotSection(sections.afterCta);
+            sections.afterCta = this.htmlParser.removeTrustpilotFromContent(sections.afterCta);
+          }
+
+          // Extract Clients & Accreditations from after content
+          this.showClientsAccreditations = this.shouldShowClientsAccreditations(slug);
+          if (this.showClientsAccreditations) {
+            this.clientsAccreditationsSection = this.htmlParser.extractClientsAccreditations(sections.afterCta);
+            sections.afterCta = this.htmlParser.removeClientsAccreditationsFromContent(sections.afterCta);
+          }
+
+          this.pageContentBefore = this.sanitizer.bypassSecurityTrustHtml(sections.beforeCta);
+          this.pageContentAfter = this.sanitizer.bypassSecurityTrustHtml(sections.afterCta);
+        } else {
+          this.pageContentBefore = this.sanitizer.bypassSecurityTrustHtml(cleanContent);
+          this.pageContentAfter = '';
+        }
+
         this.sliderImages = sliderImages;
-
-        // Set meta tags
         this.setMetaTags(pageData.metaTags);
 
         this.isLoading = false;
-
-        console.log('Page loaded:', this.page.title.rendered);
-        console.log('Page slug:', slug);
-        console.log('Slider images:', this.sliderImages.length);
       },
       error: (err) => {
         console.error('Error loading page:', err);
@@ -87,28 +132,35 @@ export class PageComponent implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * Get slider images based on page slug
-   */
-  private getSliderForPage(slug: string) {
-    // Define slider configuration for each page
-    const sliderConfig: { [key: string]: number[] | string } = {
-      '': [739,996,997, 937],        // Home page
-      'home': [739,996,997, 937],    // Home page
+  private shouldShowCards(slug: string): boolean {
+    return slug === '' || slug === 'home';
+  }
 
-      // Add more pages as needed
+  private shouldShowCta(slug: string): boolean {
+    return slug === '' || slug === 'home';
+  }
+
+  private shouldShowTrustpilot(slug: string): boolean {
+    return slug === '' || slug === 'home';
+  }
+
+  private shouldShowClientsAccreditations(slug: string): boolean {
+    return slug === '' || slug === 'home';
+  }
+
+  private getSliderForPage(slug: string) {
+    const sliderConfig: { [key: string]: number[] | string } = {
+      '': [1056,739, 996, 997, 1022],
+      'home': [1056,739, 996, 997, 1022],
     };
 
     const config = sliderConfig[slug];
 
     if (Array.isArray(config)) {
-      // Use specific image IDs
       return this.wpService.getMediaByIds(config);
     } else if (typeof config === 'string') {
-      // Search by keyword
       return this.wpService.getSliderImages(config);
     } else {
-      // No slider for this page
       return this.wpService.getMediaByIds([]);
     }
   }

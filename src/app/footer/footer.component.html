@@ -2,32 +2,79 @@
 <footer id="colophon" class="site-footer" role="contentinfo">
   <div class="site-footer-wrap">
 
-    <!-- Middle Footer - Navigation -->
-    <div class="site-middle-footer-wrap site-footer-row-container">
+    <!-- Top Footer - 4 Column Layout -->
+    <div class="site-top-footer-wrap site-footer-row-container">
       <div class="site-footer-row-container-inner">
         <div class="site-container">
-          <div class="site-middle-footer-inner-wrap">
-            <div class="site-footer-middle-section">
+          <div class="footer-columns">
 
-              <!-- Footer Navigation -->
-              <div class="footer-widget-area footer-navigation-wrap">
-                <div class="footer-widget-area-inner footer-navigation-inner">
-                  <nav id="footer-navigation" class="footer-navigation" role="navigation" aria-label="Footer Navigation">
-                    <div class="footer-menu-container">
-                      <ul id="footer-menu" class="menu">
-                        <li *ngFor="let item of footerMenuItems" class="menu-item">
-                          <a [routerLink]="'/' + (item.slug === 'home' ? '' : item.slug)"
-                             [attr.rel]="item.slug === 'data-privacy-policy' ? 'privacy-policy' : null">
-                            {{ item.title }}
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </nav>
-                </div>
+            <!-- Column 1: Get in Touch -->
+            <div class="footer-column">
+              <h3 class="footer-heading">Get in Touch</h3>
+
+              <ul class="footer-contact">
+                <li>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                  <div>
+                    <strong>Glasgow Office</strong><br>
+                    1 Barlanark Avenue, Springboig, Glasgow, G32 0JR
+                  </div>
+                </li>
+                <li>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                  <a href="mailto:info@bailliesmarquees.co.uk">info&#64;bailliesmarquees.co.uk</a>
+                </li>
+                <li>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                  <a href="tel:01417740830">0141 774 0830</a>
+                </li>
+
+              </ul>
+            </div>
+
+            <!-- Column 2: Quick Links -->
+            <div class="footer-column">
+              <h3 class="footer-heading">Quick Links</h3>
+              <ul class="footer-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Marquee Styles</a></li>
+                <li><a href="#">Accessories</a></li>
+                <li><a href="#">Gallery</a></li>
+                <li><a href="#">Testimonials</a></li>
+                <li><a href="#">Service Areas</a></li>
+              </ul>
+            </div>
+
+            <!-- Column 3: Popular Links -->
+            <div class="footer-column">
+              <h3 class="footer-heading">Popular Links</h3>
+              <ul class="footer-links">
+                <li *ngFor="let item of footerMenuItems">
+                  <a href="#">{{ item.title }}</a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Column 4: Office Hours -->
+            <div class="footer-column">
+              <h3 class="footer-heading">Office Hours</h3>
+              <div class="office-hours">
+                <p><strong>Monday - Friday:</strong> 9am - 6pm</p>
+                <p><strong>Saturday:</strong> 10am - 4pm</p>
+                <p><strong>Sunday:</strong> Closed</p>
+                <p class="emergency-note">Available 24/7 for urgent marquee assistance</p>
               </div>
 
             </div>
+
           </div>
         </div>
       </div>
@@ -45,13 +92,13 @@
                 <div class="footer-widget-area-inner site-info-inner">
                   <div class="footer-html">
                     <div class="footer-html-inner">
+                      <p class="copyright">
+                        © {{ currentYear }} Baillies Marquees. All Rights Reserved.
+                      </p>
                       <p class="company-details">
                         REG OFFICE: 1 BARLANARK AVENUE, SPRINGBOIG, GLASGOW, G32 0JR •
-                        V.A.T NUMBER: 796433879 •
-                        REG NO: SC469838
-                      </p>
-                      <p class="copyright">
-                        © {{ currentYear }} Baillies Marquees
+                        <strong class="highlight">V.A.T NUMBER: 796433879</strong> •
+                        <strong class="highlight">REG NO: SC469838</strong>
                       </p>
                     </div>
                   </div>
@@ -67,7 +114,7 @@
   </div>
 </footer>
 
-<!-- Back to Top Button (Optional Enhancement) -->
+<!-- Back to Top Button -->
 <button
   class="back-to-top"
   (click)="scrollToTop()"

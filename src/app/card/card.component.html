@@ -1,0 +1,19 @@
+<div class="card" [attr.data-aos]="'zoom-in'" [attr.data-aos-delay]="animationDelay">
+  <div class="card-inner">
+    <h2 class="card-title">{{ card.title }}</h2>
+
+    <div class="card-image">
+      <img
+        [src]="card.image"
+        [alt]="card.title"
+        loading="lazy"
+      />
+    </div>
+
+    <p class="card-description">{{ card.description | truncate:descriptionLimit }}</p>
+
+    <a [href]="card.link" class="card-link" (click)="$event.preventDefault()">
+      Learn More
+    </a>
+  </div>
+</div>

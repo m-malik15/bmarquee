@@ -1,0 +1,13 @@
+<section class="cta-section" *ngIf="cta">
+  <div class="cta-container">
+    <div class="cta-content">
+      <h2 class="cta-title">{{ cta.title }}</h2>
+      <p class="cta-description">{{ cta.description }}</p>
+    </div>
+    <div class="cta-action">
+      <a [href]="cta.buttonLink" class="cta-button" (click)="$event.preventDefault()">
+        {{ cta.buttonText }}
+      </a>
+    </div>
+  </div>
+</section>

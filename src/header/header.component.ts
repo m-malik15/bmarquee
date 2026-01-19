@@ -1,7 +1,7 @@
-// header.component.ts - UPDATED with Contact Panel
+// header.component.ts - UPDATED
 import { Component, OnInit, OnDestroy, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 import { Subject, takeUntil, filter } from 'rxjs';
 import { WordPressMenuItem, WordPressService2 } from '../app/wordpress.service2.service';
@@ -11,7 +11,7 @@ import { ContactPanelComponent } from '../app/contact-panel/contact-panel.compon
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, ContactPanelComponent], // Add ContactPanelComponent
+  imports: [CommonModule, ContactPanelComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   menuItems: WordPressMenuItem[] = [];
   isMenuOpen = false;
   isScrolled = false;
-  isContactPanelOpen = false; // Add this property
+  isContactPanelOpen = false;
   private destroy$ = new Subject<void>();
   wpService = inject(WordPressService2)
 
@@ -55,6 +55,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Handle navigation link clicks
+   */
+  handleNavClick(event: Event, item: WordPressMenuItem) {
+    event.preventDefault();
+
+    // For mobile: toggle dropdown if it has children
+    if (item.children && item.children.length > 0 && window.innerWidth <= 991) {
+      this.toggleDropdown(item, event);
+    } else {
+      // Close menu on navigation
+      this.closeMenu();
+      console.log('Navigate to:', item.slug);
+      // You can add your navigation logic here
+      // this.router.navigate(['/' + item.slug]);
+    }
+  }
+
+  /**
    * Load primary navigation menu from WordPress
    */
   private loadMenu() {
@@ -67,7 +85,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         },
         error: (err: any) => {
           console.error('Error loading menu:', err);
-          // Fallback menu if WordPress is unavailable
           this.menuItems = this.getFallbackMenu();
         }
       });
@@ -78,34 +95,34 @@ export class HeaderComponent implements OnInit, OnDestroy {
    */
   private getFallbackMenu(): WordPressMenuItem[] {
     return [
-      { ID: 1, title: 'Home', url: '/', slug: 'home' },
+      { ID: 1, title: 'Home', url: '#', slug: 'home' },
       {
         ID: 2,
         title: 'Marquee Styles',
-        url: '/marquee-styles',
+        url: '#',
         slug: 'marquee-styles',
         children: [
-          { ID: 21, title: 'Wedding Marquees', url: '/wedding-marquees', slug: 'wedding-marquees' },
-          { ID: 22, title: 'Corporate Events', url: '/corporate-events', slug: 'corporate-events' },
-          { ID: 23, title: 'Festival Marquees', url: '/festival-marquees', slug: 'festival-marquees' }
+          { ID: 21, title: 'Wedding Marquees', url: '#', slug: 'wedding-marquees' },
+          { ID: 22, title: 'Corporate Events', url: '#', slug: 'corporate-events' },
+          { ID: 23, title: 'Festival Marquees', url: '#', slug: 'festival-marquees' }
         ]
       },
       {
         ID: 3,
         title: 'Accessories',
-        url: '/accessories',
+        url: '#',
         slug: 'accessories',
         children: [
-          { ID: 31, title: 'Furniture', url: '/furniture', slug: 'furniture' },
-          { ID: 32, title: 'Lighting', url: '/lighting', slug: 'lighting' },
-          { ID: 33, title: 'Flooring', url: '/flooring', slug: 'flooring' }
+          { ID: 31, title: 'Furniture', url: '#', slug: 'furniture' },
+          { ID: 32, title: 'Lighting', url: '#', slug: 'lighting' },
+          { ID: 33, title: 'Flooring', url: '#', slug: 'flooring' }
         ]
       },
-      { ID: 4, title: 'Gallery', url: '/gallery', slug: 'gallery' },
-      { ID: 5, title: 'Testimonials', url: '/testimonials', slug: 'testimonials' },
-      { ID: 6, title: 'Service Areas', url: '/service-areas', slug: 'service-areas' },
-      { ID: 7, title: 'Prices', url: '/prices', slug: 'prices' },
-      { ID: 8, title: 'Contact Us', url: '/contact-us', slug: 'contact-us' }
+      { ID: 4, title: 'Gallery', url: '#', slug: 'gallery' },
+      { ID: 5, title: 'Testimonials', url: '#', slug: 'testimonials' },
+      { ID: 6, title: 'Service Areas', url: '#', slug: 'service-areas' },
+      { ID: 7, title: 'Prices', url: '#', slug: 'prices' },
+      { ID: 8, title: 'Contact Us', url: '#', slug: 'contact-us' }
     ];
   }
 
@@ -129,7 +146,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
 
-    // Prevent body scroll when menu is open
     if (this.isMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -151,12 +167,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isActive(slug: string): boolean {
     const currentUrl = this.router.url;
 
-    // Home page check
     if (slug === 'home' || slug === '') {
       return currentUrl === '/' || currentUrl === '';
     }
 
-    // Other pages
     return currentUrl.includes(`/${slug}`);
   }
 
@@ -175,7 +189,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 20;
 
-    // Add/remove class to header element
     const header = document.querySelector('.site-header');
     if (header) {
       if (this.isScrolled) {
@@ -220,16 +233,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     if (this.isContactPanelOpen) {
       this.onContactPanelClose();
-    }
-  }
-
-  /**
-   * Prevent default on dropdown links with children on mobile
-   */
-  handleDropdownClick(item: WordPressMenuItem, event: Event) {
-    if (item.children && item.children.length > 0 && window.innerWidth <= 991) {
-      event.preventDefault();
-      this.toggleDropdown(item, event);
     }
   }
 }

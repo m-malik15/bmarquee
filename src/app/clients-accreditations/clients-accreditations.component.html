@@ -1,0 +1,46 @@
+<div class="clients-accreditations-container" *ngIf="data">
+
+  <!-- Clients Section -->
+  <section class="clients-section" *ngIf="data.clients.length > 0">
+    <h2 class="section-title">{{ data.clientsTitle }}</h2>
+
+    <!-- Single image with all client logos -->
+    <div class="clients-image-wrapper" *ngIf="data.clients.length === 1">
+      <img
+        [src]="data.clients[0].src"
+        [alt]="data.clients[0].alt"
+        loading="lazy"
+        class="clients-composite-image"
+      />
+    </div>
+
+    <!-- Grid layout for multiple individual logos (fallback) -->
+    <div class="clients-grid" *ngIf="data.clients.length > 1">
+      <div *ngFor="let client of data.clients" class="client-logo">
+        <img
+          [src]="client.src"
+          [alt]="client.alt"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Accreditations Section -->
+  <section class="accreditations-section" *ngIf="data.accreditations.length > 0">
+    <h2 class="section-title">{{ data.accreditationsTitle }}</h2>
+    <div class="accreditations-grid">
+      <div *ngFor="let accreditation of data.accreditations" class="accreditation-item">
+        <img
+          [src]="accreditation.src"
+          [alt]="accreditation.alt"
+          loading="lazy"
+        />
+        <p *ngIf="accreditation.title" class="accreditation-title">
+          {{ accreditation.title }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+</div>
