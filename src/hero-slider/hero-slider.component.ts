@@ -280,7 +280,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
   private autoPlayTimer: any;
 
   ngOnInit(): void {
-    console.log('🎬 Hero Slider initialized with', this.slides.length, 'slides');
+
 
     if (this.autoPlay && this.slides.length > 1) {
       this.startAutoPlay();

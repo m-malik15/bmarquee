@@ -3,13 +3,13 @@
   class="contact-panel-overlay"
   *ngIf="isPanelOpen"
   (click)="closePanel()"
-  [@fadeInOut]
+
 ></div>
 
 <aside
   class="contact-panel"
   [class.open]="isPanelOpen"
-  [@slideInOut]
+
 >
   <!-- Close Button -->
   <button

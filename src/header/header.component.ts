@@ -66,7 +66,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       // Close menu on navigation
       this.closeMenu();
-      console.log('Navigate to:', item.slug);
+
       // You can add your navigation logic here
       // this.router.navigate(['/' + item.slug]);
     }
@@ -81,10 +81,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (items: WordPressMenuItem[]) => {
           this.menuItems = items;
-          console.log('Menu loaded:', items);
+
         },
         error: (err: any) => {
-          console.error('Error loading menu:', err);
+
           this.menuItems = this.getFallbackMenu();
         }
       });

@@ -49,7 +49,7 @@ export class FooterComponent implements OnInit {
 
   onNewsletterSubmit(): void {
     if (this.newsletterEmail && this.isValidEmail(this.newsletterEmail)) {
-      console.log('Newsletter signup:', this.newsletterEmail);
+
       // Add your newsletter subscription logic here
       // Example: this.newsletterService.subscribe(this.newsletterEmail).subscribe(...)
 

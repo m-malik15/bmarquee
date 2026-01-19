@@ -58,7 +58,7 @@ export class TrustpilotSectionComponent implements OnInit, AfterViewInit, OnDest
   private loadTrustpilotScript() {
     // Check if script already exists
     if (document.getElementById('trustpilot-script')) {
-      console.log('Trustpilot script already exists');
+
       return;
     }
 
@@ -69,11 +69,11 @@ export class TrustpilotSectionComponent implements OnInit, AfterViewInit, OnDest
     script.async = true;
 
     script.onload = () => {
-      console.log('Trustpilot script loaded successfully');
+
     };
 
     script.onerror = (error) => {
-      console.error('Failed to load Trustpilot script:', error);
+
     };
 
     document.head.appendChild(script);
@@ -84,17 +84,16 @@ export class TrustpilotSectionComponent implements OnInit, AfterViewInit, OnDest
 
     const widget = document.getElementById('trustpilot-widget');
 
-    console.log(`Attempt ${this.initAttempts}: Widget element:`, widget);
-    console.log(`Attempt ${this.initAttempts}: Trustpilot object:`, window.Trustpilot);
+
 
     if (!widget) {
       console.error('Trustpilot widget element not found');
 
       if (this.initAttempts < this.maxAttempts) {
-        console.log('Retrying in 1 second...');
+
         setTimeout(() => this.initializeTrustpilot(), 1000);
       } else {
-        console.error('Max initialization attempts reached');
+
       }
       return;
     }
@@ -103,7 +102,7 @@ export class TrustpilotSectionComponent implements OnInit, AfterViewInit, OnDest
       console.warn('Trustpilot object not available yet');
 
       if (this.initAttempts < this.maxAttempts) {
-        console.log('Retrying in 1 second...');
+
         setTimeout(() => this.initializeTrustpilot(), 1000);
       } else {
         console.error('Trustpilot script failed to load after max attempts');
@@ -112,11 +111,11 @@ export class TrustpilotSectionComponent implements OnInit, AfterViewInit, OnDest
     }
 
     try {
-      console.log('Initializing Trustpilot widget...');
+
       window.Trustpilot.loadFromElement(widget, true);
-      console.log('Trustpilot widget initialized successfully');
+
     } catch (error) {
-      console.error('Error initializing Trustpilot widget:', error);
+
     }
   }
 }
