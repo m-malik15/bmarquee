@@ -152,8 +152,8 @@ export class homeComponent implements OnInit, OnDestroy {
 
   private getSliderForPage(slug: string) {
     const sliderConfig: { [key: string]: number[] | string } = {
-      '': [1056,739, 996, 997, 1022],
-      'home': [1056,739, 996, 997, 1022],
+      '': [1056,739, 944, 997],
+      'home': [1056,739, 944, 997],
     };
 
     const config = sliderConfig[slug];

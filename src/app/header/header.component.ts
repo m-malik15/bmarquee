@@ -1,7 +1,7 @@
 // header.component.ts - UPDATED
 import { Component, OnInit, OnDestroy, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, RouterLink } from '@angular/router';
 
 import { Subject, takeUntil, filter } from 'rxjs';
 import { ContactPanelComponent } from '../contact-panel/contact-panel.component';
@@ -13,7 +13,7 @@ import { WordPressMenuItem, WordPressService2 } from '../services/wordpress.serv
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, ContactPanelComponent],
+  imports: [CommonModule, ContactPanelComponent, RouterLink],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
@@ -69,8 +69,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // Close menu on navigation
       this.closeMenu();
 
-      // You can add your navigation logic here
-      // this.router.navigate(['/' + item.slug]);
+      // Navigate to home or prices route
+      if (item.slug === 'home' || item.slug === '') {
+        this.router.navigate(['/']);
+      } else if (item.slug === 'prices') {
+        this.router.navigate(['/prices']);
+      }
+      // All other routes are disabled (do nothing)
     }
   }
 
