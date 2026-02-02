@@ -1,0 +1,166 @@
+<!--
+  Prices Component Template - Collapsible Panels
+
+  FEATURES:
+  - Professional collapsible expansion panels
+  - Fully responsive design
+  - Desktop: Table layout within panels
+  - Mobile: Card-based layout with inline labels
+  - Smooth animations
+  - Expand/Collapse all functionality
+-->
+
+<div class="prices-page-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Loading pricing information...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="error-message">
+    <div class="error-icon">⚠️</div>
+    <h2>Oops! Something went wrong</h2>
+    <p>{{ error }}</p>
+    <a href="/contact-us" class="btn-contact">Contact Us</a>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!isLoading && !error" class="prices-content">
+
+    <!-- Page Header -->
+    <header class="prices-header">
+      <h1>Marquee Hire Prices</h1>
+
+      <div class="intro-section">
+        <p>One of the most important issues when hiring a marquee is choosing the correct size. Choosing too large a size and it can seem that not enough people have attended, choose too small a size and it may be overcrowded and uncomfortable.</p>
+
+        <p>We would advise on between 12sq ft and 15sq ft per person for weddings etc when seated at round tables, and 6sq ft when guests are standing for a buffet style function.</p>
+      </div>
+    </header>
+
+    <!-- Expand/Collapse Controls -->
+    <div class="panel-controls">
+      <p class="expand-instruction">Click on a panel below to view detailed pricing</p>
+      <div class="control-buttons">
+        <button class="control-btn" (click)="expandAll()">
+          <span class="icon">+</span> Expand All
+        </button>
+        <button class="control-btn" (click)="collapseAll()">
+          <span class="icon">−</span> Collapse All
+        </button>
+      </div>
+    </div>
+
+    <!-- Pricing Panels -->
+    <div class="pricing-panels">
+      <div *ngFor="let table of pricingTables" class="pricing-panel" [class.expanded]="table.isExpanded">
+
+        <!-- Panel Header -->
+        <button class="panel-header" (click)="togglePanel(table.id)" type="button">
+          <div class="panel-header-content">
+            <div class="panel-title-group">
+              <h2 class="panel-title">{{ table.title }}</h2>
+              <p *ngIf="table.subtitle" class="panel-subtitle">{{ table.subtitle }}</p>
+            </div>
+          </div>
+          <span class="expand-icon" [@rotateIcon]="table.isExpanded ? 'expanded' : 'collapsed'">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </span>
+        </button>
+
+        <!-- Panel Content -->
+        <div class="panel-content" [@expandCollapse]="table.isExpanded ? 'expanded' : 'collapsed'">
+          <div class="panel-content-inner">
+
+            <!-- Desktop/Tablet Table View -->
+            <div class="table-wrapper desktop-table">
+              <table class="pricing-table">
+                <thead>
+                  <tr>
+                    <th *ngFor="let column of table.columns">{{ column }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of table.rows">
+                    <td class="size-cell">{{ row.size }}</td>
+                    <td *ngIf="row.seatedGuests" class="data-cell">{{ row.seatedGuests }}</td>
+                    <td *ngIf="row.withDanceFloor" class="data-cell">{{ row.withDanceFloor }}</td>
+                    <td *ngIf="row.standing" class="data-cell">{{ row.standing }}</td>
+                    <td class="price-cell">{{ row.price }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Mobile Stacked View (No Horizontal Scroll) -->
+            <div class="mobile-stacked">
+              <div *ngFor="let row of table.rows" class="mobile-row">
+                <div class="mobile-size">{{ row.size }}</div>
+                <div class="mobile-details">
+                  <div *ngIf="row.seatedGuests" class="mobile-detail-row">
+                    <span class="mobile-label">Seated:</span>
+                    <span class="mobile-value">{{ row.seatedGuests }}</span>
+                  </div>
+                  <div *ngIf="row.withDanceFloor" class="mobile-detail-row">
+                    <span class="mobile-label">With Dance:</span>
+                    <span class="mobile-value">{{ row.withDanceFloor }}</span>
+                  </div>
+                  <div *ngIf="row.standing" class="mobile-detail-row">
+                    <span class="mobile-label">Standing:</span>
+                    <span class="mobile-value">{{ row.standing }}</span>
+                  </div>
+                  <div class="mobile-detail-row mobile-price-row">
+                    <span class="mobile-label">Price:</span>
+                    <span class="mobile-price">{{ row.price }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Important Information - Moved to End -->
+    <div class="bottom-info-section">
+
+      <!-- Important Information Box -->
+      <div class="info-box">
+        <div class="info-box-content">
+          <h3>Important Information</h3>
+          <ul>
+            <li>A delivery charge will be applicable depending on location</li>
+            <li>Damage waiver fee available (4% of total hire price excluding VAT)</li>
+            <li>Hirer is liable for first £500 of any damage or loss</li>
+            <li>For clarification, <a href="tel:+441417740830">please call us</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Pricing Notice -->
+      <div class="pricing-notice">
+        <strong>Prices are for marquee only and exclude Delivery & VAT</strong>
+        <p>For additional products such as flooring, linings, lights, heaters and furniture, please <a href="tel:+441417740830">call</a> or <a href="#">email</a> for a full detailed quote.</p>
+      </div>
+    </div>
+
+    <!-- Footer Call to Action -->
+    <div class="cta-section">
+      <h2>Ready to Book Your Marquee?</h2>
+      <p>Contact us today for a personalized quote and expert advice</p>
+      <div class="cta-buttons">
+        <a href="tel:+441417740830" class="btn btn-primary">
+          Call Us Now
+        </a>
+        <a href="#" class="btn btn-secondary">
+          Send Enquiry
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>

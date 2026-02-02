@@ -1,0 +1,450 @@
+/* src/styles/wordpress-content.scss */
+/* ============================================
+   GENERIC WORDPRESS CONTENT STYLES
+   Use this for ALL pages that display WordPress content
+   ============================================ */
+
+/* Container for WordPress content */
+.wp-content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+.wp-content {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: #4a5568;
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 2rem 0 1rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+
+    &:first-of-type {
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: #2d3748;
+    }
+
+    strong {
+      color: #274f86;
+      font-weight: 600;
+    }
+
+    em {
+      font-style: italic;
+    }
+  }
+
+  a {
+    color: #274f86;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+    font-weight: 500;
+
+    &:hover {
+      border-bottom-color: #274f86;
+      color: #1d3d6b;
+    }
+
+    &:focus {
+      outline: 2px solid rgba(39, 79, 134, 0.5);
+      outline-offset: 2px;
+    }
+  }
+}
+
+/* ============================================
+   TABLES - GENERIC STYLING
+   ============================================ */
+.wp-content table,
+.wp-content .bm-prices-tables {
+  width: 100%;
+  margin: 3rem 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.06),
+    0 8px 30px rgba(0, 0, 0, 0.08);
+
+  caption {
+    background: linear-gradient(135deg, #5a3d8a 0%, #274f86 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 2px;
+    }
+
+    h2 {
+      color: white;
+      font-size: 1.875rem;
+      margin: 0 0 0.75rem 0;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.9375rem;
+      margin: 0.75rem auto 0;
+      line-height: 1.6;
+      max-width: 90%;
+    }
+  }
+
+  thead {
+    background: #f8f9fa;
+
+    tr {
+      border-bottom: 3px solid #e9ecef;
+
+      th {
+        padding: 1.25rem 1rem;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.9375rem;
+        color: #5a3d8a;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-right: 1px solid #e9ecef;
+        background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+
+        &:last-child {
+          border-right: none;
+        }
+
+        sup {
+          font-size: 0.7em;
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      transition: all 0.3s ease;
+      border-bottom: 1px solid #e9ecef;
+
+      &:nth-child(odd) {
+        background: #ffffff;
+      }
+
+      &:nth-child(even) {
+        background: #fafbfc;
+      }
+
+      &:hover {
+        background: linear-gradient(90deg, #f0f4ff 0%, #faf5ff 100%);
+        transform: scale(1.01);
+        box-shadow: 0 4px 12px rgba(90, 61, 138, 0.08);
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      td {
+        padding: 1.25rem 1rem;
+        text-align: center;
+        font-size: 0.9375rem;
+        color: #495057;
+        border-right: 1px solid #f0f0f0;
+
+        &:first-child {
+          font-weight: 600;
+          color: #5a3d8a;
+        }
+
+        &:last-child {
+          font-weight: 700;
+          color: #274f86;
+          font-size: 1.0625rem;
+          border-right: none;
+          background: linear-gradient(90deg, transparent 0%, rgba(90, 61, 138, 0.03) 100%);
+        }
+      }
+    }
+  }
+}
+
+/* ============================================
+   WORDPRESS BLOCKS - GENERIC STYLING
+   ============================================ */
+
+/* Spacers */
+.wp-content .wp-block-spacer {
+  display: block;
+}
+
+/* Columns */
+.wp-content .wp-block-columns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  margin: 3rem 0;
+
+  .wp-block-column {
+    min-width: 0;
+  }
+}
+
+/* Kadence/Info Boxes */
+.wp-content [class*="kadence-column"],
+.wp-content .kt-inside-inner-col {
+  background: linear-gradient(135deg, #5a3d8a 0%, #274f86 100%);
+  border: none;
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin: 3rem 0;
+  box-shadow:
+    0 4px 20px rgba(90, 61, 138, 0.2),
+    0 8px 40px rgba(39, 79, 134, 0.15);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 1rem;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    position: relative;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &.has-medium-font-size {
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    strong, em {
+      color: white;
+    }
+  }
+
+  a {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      text-decoration: none;
+      opacity: 0.9;
+    }
+  }
+}
+
+/* ============================================
+   LISTS
+   ============================================ */
+.wp-content {
+  ul, ol {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+
+    li {
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 991px) {
+  .wp-content-wrapper {
+    padding: 0 1.5rem;
+  }
+
+  .wp-content {
+    .wp-block-columns {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    table,
+    .bm-prices-tables {
+      margin: 2.5rem 0;
+
+      caption {
+        padding: 1.75rem 1.5rem;
+
+        h2 {
+          font-size: 1.625rem;
+        }
+
+        p {
+          font-size: 0.875rem;
+        }
+      }
+
+      thead th {
+        font-size: 0.8125rem;
+        padding: 1rem 0.75rem;
+      }
+
+      tbody td {
+        font-size: 0.875rem;
+        padding: 1rem 0.75rem;
+
+        &:last-child {
+          font-size: 0.9375rem;
+        }
+      }
+    }
+
+    [class*="kadence-column"],
+    .kt-inside-inner-col {
+      padding: 2rem;
+      margin: 2.5rem 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .wp-content-wrapper {
+    padding: 0 1rem;
+  }
+
+  .wp-content {
+    h1 {
+      font-size: 2rem;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+    }
+
+    table,
+    .bm-prices-tables {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 12px;
+
+      caption {
+        border-radius: 12px 12px 0 0;
+      }
+
+      thead th,
+      tbody td {
+        white-space: nowrap;
+        min-width: 100px;
+      }
+
+      thead th:first-child,
+      tbody td:first-child {
+        min-width: 120px;
+        position: sticky;
+        left: 0;
+        background: white;
+        z-index: 1;
+      }
+
+      tbody tr:nth-child(even) td:first-child {
+        background: #fafbfc;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .wp-content {
+    font-size: 0.9375rem;
+
+    p:first-of-type {
+      font-size: 1rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    [class*="kadence-column"],
+    .kt-inside-inner-col {
+      padding: 1.5rem;
+      border-radius: 12px;
+
+      p {
+        font-size: 0.9375rem;
+      }
+    }
+
+    table,
+    .bm-prices-tables {
+      caption {
+        padding: 1.5rem 1rem;
+
+        h2 {
+          font-size: 1.375rem;
+        }
+      }
+    }
+  }
+}

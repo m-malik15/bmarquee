@@ -4,8 +4,10 @@ import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { Subject, takeUntil, filter } from 'rxjs';
-import { WordPressMenuItem, WordPressService2 } from '../app/wordpress.service2.service';
-import { ContactPanelComponent } from '../app/contact-panel/contact-panel.component';
+import { ContactPanelComponent } from '../contact-panel/contact-panel.component';
+import { WordPressMenuItem, WordPressService2 } from '../services/wordpress.service.service';
+
+
 
 
 @Component({

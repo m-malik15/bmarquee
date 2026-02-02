@@ -1,97 +1,175 @@
+// card.component.scss - PREMIUM MINIMALIST VERSION (Updated)
+:host {
+  display: block;
+  height: 100%;
+}
+
 .card {
   height: 100%;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-8px);
-  }
 }
 
 .card-inner {
-  height: 100%;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #edf2f7;
-  box-shadow: 0 14px 25px -10px rgba(0, 0, 0, 0.5);
-  padding: 1rem;
-  transition: all 0.3s ease;
+  height: 100%;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+}
 
-  &:hover {
-    border-color: #9e91b9;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-  }
+.card-inner:hover {
+  border-color: #274f86;
+  box-shadow:
+    0 4px 12px rgba(39, 79, 134, 0.15),
+    0 12px 32px rgba(0, 0, 0, 0.12);
+  transform: translateY(-6px);
 }
 
 .card-title {
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin: 0 0 1rem;
-  padding: 0;
-  color: #2c3e50;
+  padding: 2.25rem 2.5rem 1rem 2.5rem;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #274f86;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
 }
 
 .card-image {
   width: 100%;
-  aspect-ratio: 21 / 14;
+  height: 300px;
   overflow: hidden;
-  border-radius: 4px;
-  margin-bottom: 1rem;
+  background: #fafafa;
+  position: relative;
+  margin: 0 1.5rem;
+  width: calc(100% - 3rem);
+  border-radius: 12px;
+}
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
-  }
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1),
+              filter 0.4s ease;
+  filter: brightness(1) saturate(1);
+}
 
-  &:hover img {
-    transform: scale(1.05);
-  }
+.card-inner:hover .card-image img {
+  transform: scale(1.06);
+  filter: brightness(1.05) saturate(1.1);
 }
 
 .card-description {
-  flex: 1;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #4a5568;
-  margin: 0 0 1rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 6;
-  -webkit-box-orient: vertical;
+  padding: 1.75rem 2.5rem;
+  margin: 0;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: #525252;
+  flex-grow: 1;
+  font-weight: 400;
 }
 
 .card-link {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  margin: 0 2.5rem 2.25rem 2.5rem;
+  padding: 1rem 2rem;
   background: #274f86;
   color: white;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   text-align: center;
-  transition: all 0.3s ease;
-  margin-top: auto;
-
-  &:hover {
-    background: #274f86;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(111, 66, 193, 0.3);
-  }
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  align-self: flex-start;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  position: relative;
+  overflow: hidden;
 }
 
+.card-link::after {
+  content: '→';
+  position: absolute;
+  right: 1.5rem;
+  transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  opacity: 0;
+}
+
+.card-link:hover {
+  background: #1d3d6b;
+  padding-right: 2.5rem;
+  transform: translateX(4px);
+}
+
+.card-link:hover::after {
+  opacity: 1;
+  transform: translateX(8px);
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
+  .card-inner {
+    border-radius: 16px;
+  }
+
   .card-title {
-    font-size: 1.1rem;
+    padding: 1.75rem 2rem 0.75rem 2rem;
+    font-size: 1.375rem;
+  }
+
+  .card-image {
+    height: 240px;
+    margin: 0 1.25rem;
+    width: calc(100% - 2.5rem);
+    border-radius: 10px;
   }
 
   .card-description {
-    font-size: 0.9rem;
-    -webkit-line-clamp: 5;
+    padding: 1.5rem 2rem;
+    font-size: 1rem;
+  }
+
+  .card-link {
+    margin: 0 2rem 1.75rem 2rem;
+    padding: 0.875rem 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-inner {
+    border-radius: 14px;
+  }
+
+  .card-title {
+    padding: 1.5rem 1.5rem 0.625rem 1.5rem;
+    font-size: 1.25rem;
+  }
+
+  .card-image {
+    height: 200px;
+    margin: 0 1rem;
+    width: calc(100% - 2rem);
+    border-radius: 8px;
+  }
+
+  .card-description {
+    padding: 1.25rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+
+  .card-link {
+    margin: 0 1.5rem 1.5rem 1.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.8125rem;
   }
 }

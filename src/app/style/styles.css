@@ -50,7 +50,7 @@ img {
 
 /* Utility Classes */
 .container {
-  max-width: 1200px;
+  max-width: 1376px; /* Change from 1200px to match header */
   margin: 0 auto;
   padding: 0 2rem;
 }

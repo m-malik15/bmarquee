@@ -1,7 +1,7 @@
 // slider.component.ts
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MediaItem } from '../wordpress.service2.service';
+import { MediaItem } from '../services/wordpress.service.service';
 
 @Component({
   selector: 'app-slider',

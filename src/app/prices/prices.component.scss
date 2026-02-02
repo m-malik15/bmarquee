@@ -1,0 +1,788 @@
+// prices.component.scss - Professional Collapsible Pricing Panels
+// Modern, clean design with smooth animations and full responsiveness
+
+// ============================================================================
+// VARIABLES
+// ============================================================================
+
+// Brand Colors from Baillies Marquees
+$primary-color: #274f86;        // Brand blue
+$primary-dark: #1c3a61;         // Darker blue
+$primary-light: #3a6ba8;        // Lighter blue
+$accent-color: #5b87c5;         // Light blue accent
+$accent-hover: #4a76b4;
+
+$text-dark: #333333;
+$text-medium: #555555;
+$text-light: #777777;
+$bg-light: #f5f5f5;
+$bg-white: #ffffff;
+$border-color: #e0e0e0;
+$border-hover: #c0c0c0;
+
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+$shadow-md: 0 2px 8px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12);
+$shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+
+$transition-fast: 200ms;
+$transition-medium: 300ms;
+$transition-slow: 400ms;
+
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 1024px;
+$max-width: 1376px;
+
+// ============================================================================
+// MIXINS
+// ============================================================================
+
+@mixin respond-below($breakpoint) {
+  @media (max-width: #{$breakpoint - 1px}) {
+    @content;
+  }
+}
+
+@mixin respond-above($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+// ============================================================================
+// BASE CONTAINER
+// ============================================================================
+
+.prices-page-container {
+  min-height: 100vh;
+  background: $bg-light;
+  padding: 2rem 1rem;
+
+  @include respond-above($breakpoint-tablet) {
+    padding: 3rem 2rem;
+  }
+}
+
+// ============================================================================
+// LOADING & ERROR STATES
+// ============================================================================
+
+.loading-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 1.5rem;
+
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid $border-color;
+    border-top-color: $primary-color;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  p {
+    color: $text-medium;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-message {
+  max-width: 600px;
+  margin: 4rem auto;
+  padding: 3rem 2rem;
+  background: $bg-white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  text-align: center;
+
+  .error-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    color: $text-dark;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: $text-medium;
+    margin-bottom: 2rem;
+  }
+
+  .btn-contact {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    background: $primary-color;
+    color: white;
+    text-decoration: none;
+    border-radius: $radius-md;
+    font-weight: 600;
+    transition: all $transition-medium;
+
+    &:hover {
+      background: $primary-dark;
+      transform: translateY(-2px);
+      box-shadow: $shadow-hover;
+    }
+  }
+}
+
+// ============================================================================
+// MAIN CONTENT
+// ============================================================================
+
+.prices-content {
+  max-width: $max-width;
+  margin: 0 auto;
+}
+
+// ============================================================================
+// HEADER SECTION
+// ============================================================================
+
+.prices-header {
+  background: $bg-white;
+  padding: 2.5rem 2rem;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  margin-bottom: 2rem;
+
+  @include respond-below($breakpoint-mobile) {
+    padding: 2rem 1.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $primary-color;
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+
+    @include respond-below($breakpoint-mobile) {
+      font-size: 1.75rem;
+    }
+  }
+
+  .intro-section {
+    p {
+      color: $text-medium;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      @include respond-below($breakpoint-mobile) {
+        font-size: 0.95rem;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// MOBILE STACKED VIEW (NO HORIZONTAL SCROLL)
+// ============================================================================
+
+.mobile-stacked {
+  display: none;
+
+  @include respond-below($breakpoint-mobile) {
+    display: block;
+  }
+}
+
+.mobile-row {
+  background: white;
+  border: 1px solid $border-color;
+  border-radius: $radius-sm;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .mobile-size {
+    background: $primary-color;
+    color: white;
+    padding: 0.75rem 1rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .mobile-details {
+    padding: 0.875rem 1rem;
+  }
+
+  .mobile-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid $border-color;
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    &.mobile-price-row {
+      padding-top: 0.625rem;
+      margin-top: 0.25rem;
+    }
+  }
+
+  .mobile-label {
+    font-size: 0.8rem;
+    color: $text-light;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .mobile-value {
+    font-size: 0.875rem;
+    color: $text-dark;
+    font-weight: 600;
+  }
+
+  .mobile-price {
+    font-size: 1.1rem;
+    color: $primary-color;
+    font-weight: 700;
+  }
+}
+
+// ============================================================================
+// BOTTOM INFO SECTION (Moved from header)
+// ============================================================================
+
+.bottom-info-section {
+  margin-top: 3rem;
+  margin-bottom: 2.5rem;
+}
+
+// Info Box
+.info-box {
+  background: white;
+  padding: 1.75rem;
+  border-radius: $radius-md;
+  border: 1px solid $border-color;
+  margin-bottom: 1.5rem;
+  box-shadow: $shadow-sm;
+
+  @include respond-below($breakpoint-mobile) {
+    padding: 1.5rem;
+  }
+
+  .info-box-content {
+    h3 {
+      color: $primary-color;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        color: $text-medium;
+        padding: 0.5rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+        font-size: 0.95rem;
+
+        &::before {
+          content: '✓';
+          position: absolute;
+          left: 0;
+          color: $primary-color;
+          font-weight: 700;
+        }
+      }
+    }
+
+    a {
+      color: $primary-color;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Pricing Notice
+.pricing-notice {
+  background: white;
+  padding: 1.5rem;
+  border-radius: $radius-md;
+  border: 1px solid $border-color;
+  box-shadow: $shadow-sm;
+
+  strong {
+    display: block;
+    color: $primary-color;
+    font-size: 1.05rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    color: $text-medium;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  a {
+    color: $primary-color;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// ============================================================================
+// PANEL CONTROLS
+// ============================================================================
+
+.panel-controls {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+
+  @include respond-below($breakpoint-mobile) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .expand-instruction {
+    color: $text-medium;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 0;
+    flex: 1;
+
+    @include respond-below($breakpoint-mobile) {
+      font-size: 0.9rem;
+    }
+  }
+
+  .control-buttons {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .control-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    background: $bg-white;
+    border: 1px solid $border-color;
+    border-radius: $radius-sm;
+    color: $text-dark;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all $transition-fast;
+    box-shadow: $shadow-sm;
+
+    .icon {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    &:hover {
+      background: $primary-color;
+      color: white;
+      border-color: $primary-color;
+      box-shadow: $shadow-md;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+}
+
+// ============================================================================
+// PRICING PANELS
+// ============================================================================
+
+.pricing-panels {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+.pricing-panel {
+  background: $bg-white;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  overflow: hidden;
+  transition: all $transition-medium;
+  border: 1px solid $border-color;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+
+  &.expanded {
+    .panel-header {
+      background: $primary-color;
+      color: white;
+
+      .expand-icon svg {
+        stroke: white;
+      }
+    }
+  }
+}
+
+// Panel Header
+.panel-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  background: $primary-color;
+  border: none;
+  cursor: pointer;
+  transition: all $transition-medium;
+  text-align: left;
+  color: white;
+
+  @include respond-below($breakpoint-mobile) {
+    padding: 1rem 1.25rem;
+  }
+
+  .expand-icon svg {
+    stroke: white;
+    transition: stroke $transition-medium;
+  }
+
+  &:hover {
+    background: $primary-dark;
+    color: white;
+
+    .expand-icon svg {
+      stroke: white;
+    }
+  }
+
+  .panel-header-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  .panel-title-group {
+    flex: 1;
+  }
+
+  .panel-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.3;
+
+    @include respond-below($breakpoint-mobile) {
+      font-size: 1rem;
+    }
+  }
+
+  .panel-subtitle {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.85rem;
+    opacity: 0.9;
+    line-height: 1.4;
+
+    @include respond-below($breakpoint-mobile) {
+      font-size: 0.8rem;
+    }
+  }
+
+  .expand-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    transition: transform $transition-medium;
+    margin-left: 1rem;
+
+    svg {
+      stroke-width: 2.5;
+    }
+  }
+}
+
+// Panel Content
+.panel-content {
+  overflow: hidden;
+}
+
+.panel-content-inner {
+  padding: 1.5rem;
+
+  @include respond-below($breakpoint-mobile) {
+    padding: 1.25rem;
+  }
+}
+
+// ============================================================================
+// DESKTOP/TABLET TABLE VIEW
+// ============================================================================
+
+.desktop-table {
+  display: block;
+
+  @include respond-below($breakpoint-mobile) {
+    display: none;
+  }
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: $radius-sm;
+  border: 1px solid $border-color;
+}
+
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+
+  thead {
+    background: $primary-color;
+    color: white;
+
+    th {
+      padding: 1rem 0.875rem;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+
+      &:first-child {
+        padding-left: 1.25rem;
+      }
+
+      &:last-child {
+        padding-right: 1.25rem;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      background: white;
+      transition: all $transition-fast;
+
+      &:nth-child(even) {
+        background: rgba($primary-color, 0.03);
+      }
+
+      &:hover {
+        background: rgba($primary-color, 0.08);
+      }
+    }
+
+    td {
+      padding: 0.875rem;
+      color: $text-medium;
+      border-bottom: 1px solid $border-color;
+      white-space: nowrap;
+
+      &:first-child {
+        padding-left: 1.25rem;
+      }
+
+      &:last-child {
+        padding-right: 1.25rem;
+      }
+
+      &.size-cell {
+        font-weight: 700;
+        color: $text-dark;
+        font-size: 0.95rem;
+      }
+
+      &.price-cell {
+        font-weight: 700;
+        color: $primary-color;
+        font-size: 1rem;
+      }
+    }
+  }
+}
+// ============================================================================
+
+.cta-section {
+  background: $primary-color;
+  padding: 2.5rem 2rem;
+  border-radius: $radius-md;
+  text-align: center;
+  box-shadow: $shadow-md;
+  color: white;
+
+  @include respond-below($breakpoint-mobile) {
+    padding: 2rem 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: white !important;
+
+    @include respond-below($breakpoint-mobile) {
+      font-size: 1.5rem;
+    }
+  }
+
+  > p {
+    font-size: 1rem;
+    margin-bottom: 1.75rem;
+    opacity: 0.95;
+
+    @include respond-below($breakpoint-mobile) {
+      font-size: 0.95rem;
+    }
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 2rem;
+    border-radius: $radius-sm;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all $transition-medium;
+    box-shadow: $shadow-sm;
+    min-width: 160px;
+
+    @include respond-below($breakpoint-mobile) {
+      padding: 0.75rem 1.75rem;
+      font-size: 0.9rem;
+      min-width: 140px;
+    }
+
+    &.btn-primary {
+      background: white;
+      color: $primary-color;
+
+      &:hover {
+        background: $bg-light;
+        box-shadow: $shadow-md;
+      }
+    }
+
+    &.btn-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+
+      &:hover {
+        background: rgba(white, 0.1);
+      }
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+}
+
+// ============================================================================
+// ANIMATIONS & UTILITIES
+// ============================================================================
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.prices-content {
+  animation: fadeIn 0.6s ease-out;
+}
+
+// ============================================================================
+// PRINT STYLES
+// ============================================================================
+
+@media print {
+  .panel-controls,
+  .cta-section,
+  .expand-icon {
+    display: none !important;
+  }
+
+  .pricing-panel {
+    page-break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+    margin-bottom: 2rem;
+  }
+
+  .panel-content {
+    display: block !important;
+    height: auto !important;
+  }
+
+  .mobile-view {
+    display: none !important;
+  }
+
+  .desktop-view {
+    display: block !important;
+  }
+}

@@ -1,24 +1,26 @@
 // wordpress.service.ts
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map, catchError, of, switchMap } from 'rxjs';
+import { ContentCleanerService } from './content-cleaner.service';
 
 // ============================================
 // INTERFACES
 // ============================================
 
 export interface WordPressPage {
-  id: number;
-  date: string;
-  modified: string;
-  slug: string;
-  status: string;
-  type: string;
-  link: string;
+   id: number;
   title: { rendered: string };
   content: { rendered: string };
   excerpt: { rendered: string };
-  featured_media: number;
+  date: string;
+  modified: string;
+  slug: string;
+  link: string;
+  featured_media?: number;
+  yoast_head_json?: any;
+  status: string;
+  type: string;
   _embedded?: {
     'wp:featuredmedia'?: Array<{
       source_url: string;
@@ -114,6 +116,20 @@ export interface MediaResponse {
   };
 }
 
+export interface CleanPageData {
+  page: WordPressPage;
+  cleanContent: string;
+  metaTags: PageMetaTags;
+}
+
+export interface PageMetaTags {
+  title: string;
+  description: string;
+  canonical: string;
+  ogImage?: string;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -122,12 +138,61 @@ export class WordPressService2 {
   private readonly SITE_URL = 'https://www.staging2.bailliesmarquees.co.uk';
   private readonly USERNAME = 'mmalik15';
   private readonly APP_PASSWORD = 'xY3D 2can Bbgq L7EA Kbun uUgb';
+    contentCleaner = inject(ContentCleanerService);
 
   constructor(private http: HttpClient) { }
 
   // ============================================
   // PAGES
   // ============================================
+
+   /**
+   * Get page by slug with optional content cleaning
+   */
+  getWpPage(slug: string, cleanContent = true): Observable<CleanPageData> {
+    return this.http.get<WordPressPage[]>(`${this.API_BASE}/pages?slug=${slug}`).pipe(
+      map(pages => {
+        if (pages && pages.length > 0) {
+          const page = pages[0];
+
+          // Clean WordPress styles if requested
+          const content = cleanContent
+            ? this.contentCleaner.cleanWordPressContent(page.content.rendered, {
+                removeStyles: true,
+                removeInlineStyles: true,
+                removeClasses: false, // Keep classes for now
+                preserveClasses: ['bm-prices-tables'] // Preserve table class for targeting
+              })
+            : page.content.rendered;
+
+          return {
+            page,
+            cleanContent: content,
+            metaTags: this.extractMetaTags(page)
+          };
+        }
+        throw new Error('Page not found');
+      }),
+      catchError(error => {
+        console.error('Error fetching page:', error);
+        throw error;
+      })
+    );
+  }
+
+    /**
+   * Extract meta tags from WordPress page
+   */
+  private extractMetaTags(page: WordPressPage): PageMetaTags {
+    const yoast = page.yoast_head_json;
+
+    return {
+      title: yoast?.title || page.title.rendered,
+      description: yoast?.description || this.stripHtml(page.excerpt.rendered).substring(0, 160),
+      canonical: yoast?.canonical || page.link,
+      ogImage: yoast?.og_image?.[0]?.url
+    };
+  }
 
   /**
    * Get page by slug or home page if empty

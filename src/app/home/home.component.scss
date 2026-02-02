@@ -372,7 +372,7 @@
 // Loading & Error states remain the same...
 
 .page {
-  max-width: 1200px;
+  max-width: 1376px  !important;
   margin: 0 auto;
 
   .page-header {
@@ -655,5 +655,33 @@ app-slider {
   .section-title {
     font-size: 1.5rem;
     margin-bottom: 20px;
+  }
+}
+
+.page-wrapper {
+  .page {
+    .container {
+      // Inherits from global styles.css
+      // max-width: 1200px;
+      // margin: 0 auto;
+      // padding: 0 2rem;
+    }
+  }
+}
+
+// Ensure slider is full-width
+app-slider {
+  width: 100%;
+  display: block;
+}
+
+// Content spacing
+.page-content {
+  margin: 2rem 0;
+
+  // Override any WordPress content that might break alignment
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }

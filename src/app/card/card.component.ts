@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { TruncatePipe } from '../../truncate.pipe';
+import { TruncatePipe } from '../utilities/truncate.pipe';
 
 export interface CardData {
   title: string;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CardData } from './card/card.component';
+import { CardData } from '../card/card.component';
+
 
 
 export interface CtaData {

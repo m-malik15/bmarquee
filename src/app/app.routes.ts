@@ -1,17 +1,23 @@
 // src/app/app.routes.ts
 import { Routes } from '@angular/router';
-import { PageComponent } from './page/page.component';
+import { homeComponent } from './home/home.component';
+import { PricesComponent } from './prices/prices.component';
 
 
 export const routes: Routes = [
   {
     path: '',
-    component: PageComponent
+    component: homeComponent
   },
   {
-    path: ':slug',
-    component: PageComponent
+    path: 'prices',
+    component: PricesComponent,
+    title: 'Marquee Hire Prices - Baillie\'s Marquees'
   },
+  // {
+  //   path: ':slug',
+  //   component: homeComponent
+  // },
   {
     path: '**',
     redirectTo: ''
