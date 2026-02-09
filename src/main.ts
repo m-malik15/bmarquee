@@ -6,6 +6,7 @@ import { AppComponent } from './app/app.component';
 import { homeComponent } from './app/home/home.component';
 import { PricesComponent } from './app/prices/prices.component';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { FreeQuoteComponent } from './app/free-quote/free-quote.component';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -13,6 +14,7 @@ bootstrapApplication(AppComponent, {
     provideRouter([
       { path: '', component: homeComponent },
       { path: 'prices', component: PricesComponent },
+      { path: 'free-quote', component: FreeQuoteComponent },
       // { path: ':slug', component: homeComponent }
     ]),
     provideAnimations(),

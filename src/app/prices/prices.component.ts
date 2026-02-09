@@ -97,7 +97,7 @@ export class PricesComponent implements OnInit, OnDestroy {
         id: 'clearspan-6m',
         title: '6m Wide Clearspan Marquees',
         isExpanded: true, // First one open by default
-        columns: ['Marquee Size', 'Seated Guests', 'With Dance Floor', 'Standing', 'Price'],
+        columns: ['Marquee Size', 'Seated Guests', 'With Dance Floor', 'Standing', 'Prices from'],
         rows: [
           { size: '6m x 6m', seatedGuests: '32 - 40', withDanceFloor: '16 - 20', standing: '50', price: '£306.00' },
           { size: '6m x 9m', seatedGuests: '48 - 60', withDanceFloor: '32 - 40', standing: '70', price: '£459.00' },
@@ -114,7 +114,7 @@ export class PricesComponent implements OnInit, OnDestroy {
         id: 'clearspan-9m',
         title: '9m Wide Clearspan Marquees',
         isExpanded: false,
-        columns: ['Marquee Size', 'Seated Guests', 'With Dance Floor', 'Standing', 'Price'],
+        columns: ['Marquee Size', 'Seated Guests', 'With Dance Floor', 'Standing', 'Prices from'],
         rows: [
           { size: '9m x 9m', seatedGuests: '72 - 90', withDanceFloor: '48 - 60', standing: '115', price: '£688.50' },
           { size: '9m x 12m', seatedGuests: '96 - 120', withDanceFloor: '48 - 60', standing: '140', price: '£918.00' },
@@ -133,7 +133,7 @@ export class PricesComponent implements OnInit, OnDestroy {
         title: '12m Wide Clearspan Marquees',
 
         isExpanded: false,
-        columns: ['Marquee Size', 'Seated Guests', 'With Dance Floor', 'Standing', 'Price'],
+        columns: ['Marquee Size', 'Seated Guests', 'With Dance Floor', 'Standing', 'Prices from'],
         rows: [
           { size: '12m x 12m', seatedGuests: '128 - 160', withDanceFloor: '64 - 80', standing: '160', price: '£1368.00' },
           { size: '12m x 15m', seatedGuests: '152 - 190', withDanceFloor: '96 - 120', standing: '220', price: '£1710.00' },
@@ -152,7 +152,7 @@ export class PricesComponent implements OnInit, OnDestroy {
         title: '15m Wide Clearspan Marquees',
 
         isExpanded: false,
-        columns: ['Marquee Size', 'Seated Guests', 'With Dance Floor', 'Standing', 'Price'],
+        columns: ['Marquee Size', 'Seated Guests', 'With Dance Floor', 'Standing', 'Prices from'],
         rows: [
           { size: '15m x 15m', seatedGuests: '192 - 240', withDanceFloor: '112 - 140', standing: '240', price: '£2193.75' },
           { size: '15m x 18m', seatedGuests: '232 - 290', withDanceFloor: '112 - 140', standing: '280', price: '£2632.50' },
@@ -170,7 +170,7 @@ export class PricesComponent implements OnInit, OnDestroy {
         title: 'Pagoda Marquees',
 
         isExpanded: false,
-        columns: ['Marquee Size', 'Seated Guests', 'With Dance Floor', 'Standing', 'Price'],
+        columns: ['Marquee Size', 'Seated Guests', 'With Dance Floor', 'Standing', 'Prices from'],
         rows: [
           { size: '3m x 3m', seatedGuests: '8 - 10', withDanceFloor: 'N/A', standing: '15', price: '£225.00' },
           { size: '4m x 4m', seatedGuests: '13 - 18', withDanceFloor: 'N/A', standing: '20', price: '£285.00' },
@@ -184,7 +184,7 @@ export class PricesComponent implements OnInit, OnDestroy {
         subtitle: 'Modular marquees that can be joined together in various orientations to fit different shaped gardens',
 
         isExpanded: false,
-        columns: ['Marquee Size', 'Seated Guests', 'With Dance Floor', 'Standing', 'Price'],
+        columns: ['Marquee Size', 'Seated Guests', 'With Dance Floor', 'Standing', 'Prices from'],
         rows: [
           { size: '3m x 3m', seatedGuests: '8 - 10', withDanceFloor: 'N/A', standing: '15', price: '£115.00' },
           { size: '3m x 4.5m', seatedGuests: '10 - 15', withDanceFloor: 'N/A', standing: '20', price: '£115.00' },
@@ -196,7 +196,7 @@ export class PricesComponent implements OnInit, OnDestroy {
         title: '2m & 3m Clearspan Marquees (Tunnels)',
 
         isExpanded: false,
-        columns: ['Marquee Size', 'Price'],
+        columns: ['Marquee Size', 'Prices from'],
         rows: [
           { size: '2m x 3m', seatedGuests: '', withDanceFloor: '', standing: '', price: '£115.50' },
           { size: '2m x 6m', seatedGuests: '', withDanceFloor: '', standing: '', price: '£195.00' },
@@ -215,7 +215,7 @@ export class PricesComponent implements OnInit, OnDestroy {
         title: 'Star Shade Marquees',
 
         isExpanded: false,
-        columns: ['Marquee Size', 'Guests', 'Price'],
+        columns: ['Marquee Size', 'Guests', 'Prices from'],
         rows: [
           { size: 'Star Shade 16.5m diameter', seatedGuests: '80', withDanceFloor: '', standing: '', price: '£330.00' },
           { size: 'Twin Shade 21m x 16.5m', seatedGuests: '140', withDanceFloor: '', standing: '', price: '£550.00' }

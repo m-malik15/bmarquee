@@ -240,8 +240,15 @@ export class WordPressService2 {
    * Get front/home page
    */
   private getFrontPage(): Observable<WordPressPage | null> {
+    this.getPageBySlug('free-quotation').subscribe({
+      next: (pageData) => {
+        console.log('Quote page data:', pageData);
+      }
+    });
     return this.getPageBySlug('home');
   }
+
+
 
   /**
    * Get all pages
@@ -419,20 +426,26 @@ export class WordPressService2 {
     );
   }
 
-  /**
-   * Get specific media items by IDs
-   */
-  getMediaByIds(ids: number[]): Observable<MediaItem[]> {
-    if (ids.length === 0) return of([]);
+/**
+ * Get specific media items by IDs - returns in the order of the IDs array
+ */
+getMediaByIds(ids: number[]): Observable<MediaItem[]> {
+  if (ids.length === 0) return of([]);
 
-    const url = `${this.API_BASE}/media?include=${ids.join(',')}&_fields=id,title,alt_text,caption,description,media_type,mime_type,source_url,media_details`;
+  const url = `${this.API_BASE}/media?include=${ids.join(',')}&_fields=id,title,alt_text,caption,description,media_type,mime_type,source_url,media_details`;
 
-    return this.http.get<MediaResponse[]>(url).pipe(
-      map(items => items.map(item => this.transformMediaItem(item))),
-      catchError(() => of([]))
-    );
-  }
+  return this.http.get<MediaResponse[]>(url).pipe(
+    map(items => {
+      const mediaItems = items.map(item => this.transformMediaItem(item));
 
+      // Sort media items to match the order of the ids array
+      return ids
+        .map(id => mediaItems.find(item => item.id === id))
+        .filter((item): item is MediaItem => item !== undefined);
+    }),
+    catchError(() => of([]))
+  );
+}
   /**
    * Get single media item by ID
    */

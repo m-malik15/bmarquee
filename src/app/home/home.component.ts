@@ -54,7 +54,7 @@ export class homeComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private htmlParser: HtmlParserService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.params
@@ -152,8 +152,8 @@ export class homeComponent implements OnInit, OnDestroy {
 
   private getSliderForPage(slug: string) {
     const sliderConfig: { [key: string]: number[] | string } = {
-      '': [1056,739, 944, 997],
-      'home': [1056,739, 944, 997],
+      '': [739, 997, 1056, 944, 462, 677],
+      'home': [739, 997, 1056, 944, 462, 677],
     };
 
     const config = sliderConfig[slug];

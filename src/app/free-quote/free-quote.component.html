@@ -1,0 +1,382 @@
+<!--
+  Free Quote Component Template
+  Professional quotation request form with video introduction
+-->
+
+<div class="free-quote-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Loading form...</p>
+  </div>
+
+  <!-- Success Message -->
+  <div *ngIf="submitSuccess && !isLoading" class="success-message" @fadeIn>
+    <div class="success-icon">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+    </div>
+    <h2>Thank You!</h2>
+    <p>Your quotation request has been successfully submitted.</p>
+    <p>We'll review your requirements and get back to you within 24 hours.</p>
+    <div class="success-actions">
+      <a routerLink="/" class="btn btn-primary">Return to Home</a>
+      <a routerLink="/prices" class="btn btn-secondary">View Pricing</a>
+    </div>
+  </div>
+
+  <!-- Main Form Content -->
+  <div *ngIf="!isLoading && !submitSuccess" class="quote-content" @fadeIn>
+
+    <!-- Page Header -->
+    <header class="quote-header">
+      <div class="header-content">
+        <h1>Free Quotation</h1>
+        <p class="header-intro">Complete the form below to receive a detailed quote for your event. The more information you provide, the more accurate your quotation will be. Our team will review your requirements and respond within 24 hours.</p>
+      </div>
+    </header>
+
+    <!-- Form -->
+    <form [formGroup]="quoteForm" (ngSubmit)="onSubmit()" class="quote-form">
+
+      <!-- Error Message -->
+      <div *ngIf="submitError" class="alert alert-error">
+        <strong>⚠️ Error:</strong> {{ submitError }}
+      </div>
+
+      <!-- Event Details Section -->
+      <section class="form-section">
+        <h2 class="section-title">Event details</h2>
+
+        <div class="form-row three-columns">
+          <div class="form-group" [class.error]="isFieldInvalid('eventStreetAddress')">
+            <label for="eventStreetAddress">
+              Event street address <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="eventStreetAddress"
+              formControlName="eventStreetAddress"
+              placeholder="Address of the event."
+              class="form-control">
+            <span *ngIf="isFieldInvalid('eventStreetAddress')" class="error-message">
+              {{ getErrorMessage('eventStreetAddress') }}
+            </span>
+          </div>
+
+          <div class="form-group" [class.error]="isFieldInvalid('eventCityTown')">
+            <label for="eventCityTown">
+              Town/City <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="eventCityTown"
+              formControlName="eventCityTown"
+              class="form-control">
+            <span *ngIf="isFieldInvalid('eventCityTown')" class="error-message">
+              {{ getErrorMessage('eventCityTown') }}
+            </span>
+          </div>
+
+          <div class="form-group" [class.error]="isFieldInvalid('eventPostcode')">
+            <label for="eventPostcode">
+              Postcode <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="eventPostcode"
+              formControlName="eventPostcode"
+              class="form-control">
+            <span *ngIf="isFieldInvalid('eventPostcode')" class="error-message">
+              {{ getErrorMessage('eventPostcode') }}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="additionalInformation">Additional information</label>
+          <textarea
+            id="additionalInformation"
+            formControlName="additionalInformation"
+            rows="5"
+            placeholder="To give the most accurate quote, please give us a good idea of how you imagine your marquee to be. Do you need a dance-floor or bar area with possible space for a band, DJ or catering etc. If a wedding, how many people for the main event and meal and how many additional for evening. THE MORE DETAIL IN THIS SECTION WILL REALLY HELP US UNDERSTAND YOUR VISION."
+            class="form-control"></textarea>
+        </div>
+
+        <div class="form-row three-columns">
+          <div class="form-group" [class.error]="isFieldInvalid('eventType')">
+            <label for="eventType" class="padding-top-10">
+              Event type <span class="required">*</span>
+            </label>
+            <select id="eventType" formControlName="eventType" class="form-control">
+              <option value="">Select</option>
+              <option *ngFor="let type of eventTypes" [value]="type">{{ type }}</option>
+            </select>
+            <span *ngIf="isFieldInvalid('eventType')" class="error-message">
+              {{ getErrorMessage('eventType') }}
+            </span>
+          </div>
+
+          <div class="form-group"
+               *ngIf="quoteForm.get('eventType')?.value === 'Other. Please specify'"
+               [class.error]="isFieldInvalid('otherEventType')">
+            <label for="otherEventType">
+              Other event type <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="otherEventType"
+              formControlName="otherEventType"
+              placeholder="If you selected Other, please specify here."
+              class="form-control">
+            <span *ngIf="isFieldInvalid('otherEventType')" class="error-message">
+              {{ getErrorMessage('otherEventType') }}
+            </span>
+          </div>
+
+          <div class="form-group" [class.error]="isFieldInvalid('groundType')">
+            <label for="groundType" class="padding-top-10">
+              Ground type <span class="required">*</span>
+            </label>
+            <select id="groundType" formControlName="groundType" class="form-control">
+              <option value="">Select</option>
+              <option *ngFor="let type of groundTypes" [value]="type">{{ type }}</option>
+            </select>
+            <span *ngIf="isFieldInvalid('groundType')" class="error-message">
+              {{ getErrorMessage('groundType') }}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="totalGuests">Total number of guests</label>
+            <input
+              type="number"
+              id="totalGuests"
+              formControlName="totalGuests"
+              class="form-control"
+              placeholder="Total number of guests attending"
+              min="0">
+          </div>
+        </div>
+
+        <div class="form-row four-columns">
+          <div class="form-group" [class.error]="isFieldInvalid('eventStartDate')">
+            <label for="eventStartDate">
+              Event start date <span class="required">*</span>
+            </label>
+            <input
+              type="date"
+              id="eventStartDate"
+              formControlName="eventStartDate"
+              class="form-control">
+            <span *ngIf="isFieldInvalid('eventStartDate')" class="error-message">
+              {{ getErrorMessage('eventStartDate') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="startTime">Start time</label>
+            <input
+              type="time"
+              id="startTime"
+              formControlName="startTime"
+              class="form-control">
+          </div>
+
+          <div class="form-group" [class.error]="isFieldInvalid('eventEndDate')">
+            <label for="eventEndDate">
+              Event end date <span class="required">*</span>
+            </label>
+            <input
+              type="date"
+              id="eventEndDate"
+              formControlName="eventEndDate"
+              class="form-control">
+            <span *ngIf="isFieldInvalid('eventEndDate')" class="error-message">
+              {{ getErrorMessage('eventEndDate') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="endTime">End time</label>
+            <input
+              type="time"
+              id="endTime"
+              formControlName="endTime"
+              class="form-control">
+          </div>
+        </div>
+      </section>
+
+      <!-- Marquee Add-On's & Extras Section -->
+      <section class="form-section">
+        <h2 class="section-title">Marquee Add-On's &amp; Extras</h2>
+
+        <div class="form-group checkbox-group">
+          <label class="group-label">Select any additional items you require:</label>
+          <div class="checkbox-list">
+            <label *ngFor="let option of accessoryOptions" class="checkbox-label">
+              <input
+                type="checkbox"
+                [value]="option"
+                [disabled]="option === 'Flooring' && isFlooringDisabled()"
+                [checked]="quoteForm.get('accessories')?.value?.includes(option)"
+                (change)="onCheckboxChange($event, 'accessories')">
+              <span>{{ option }}</span>
+              <span *ngIf="option === 'Interior Linings'" class="helper-text">(Automatically includes flooring)</span>
+            </label>
+          </div>
+          <p class="info-text">
+            <strong>Note:</strong> Interior Linings require flooring - this will be automatically selected and cannot be removed while linings are selected.
+          </p>
+        </div>
+      </section>
+
+      <!-- Your Details Section -->
+      <section class="form-section">
+        <h2 class="section-title">Your details</h2>
+
+        <div class="form-row two-columns">
+          <div class="form-group radio-group">
+            <label class="group-label">Are you booking for a company or for personal use?</label>
+            <div class="radio-list">
+              <label class="radio-label">
+                <input type="radio" formControlName="bookingType" value="Company">
+                <span>Company</span>
+              </label>
+              <label class="radio-label">
+                <input type="radio" formControlName="bookingType" value="Personal">
+                <span>Personal</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group"
+               *ngIf="quoteForm.get('bookingType')?.value === 'Company'"
+               [class.error]="isFieldInvalid('companyName')">
+            <label for="companyName">
+              Company name <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="companyName"
+              formControlName="companyName"
+              placeholder="Only if enquiring for a company"
+              class="form-control">
+            <span *ngIf="isFieldInvalid('companyName')" class="error-message">
+              {{ getErrorMessage('companyName') }}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row two-columns">
+          <div class="contact-column">
+            <div class="form-group" [class.error]="isFieldInvalid('fullName')">
+              <label for="fullName">
+                Full name <span class="required">*</span>
+              </label>
+              <input
+                type="text"
+                id="fullName"
+                formControlName="fullName"
+                class="form-control">
+              <span *ngIf="isFieldInvalid('fullName')" class="error-message">
+                {{ getErrorMessage('fullName') }}
+              </span>
+            </div>
+
+            <div class="form-group" [class.error]="isFieldInvalid('phoneNumber')">
+              <label for="phoneNumber">
+                Phone number <span class="required">*</span>
+              </label>
+              <input
+                type="tel"
+                id="phoneNumber"
+                formControlName="phoneNumber"
+                class="form-control">
+              <span *ngIf="isFieldInvalid('phoneNumber')" class="error-message">
+                {{ getErrorMessage('phoneNumber') }}
+              </span>
+            </div>
+
+            <div class="form-group" [class.error]="isFieldInvalid('emailAddress')">
+              <label for="emailAddress">
+                Email address <span class="required">*</span>
+              </label>
+              <input
+                type="email"
+                id="emailAddress"
+                formControlName="emailAddress"
+                class="form-control">
+              <span *ngIf="isFieldInvalid('emailAddress')" class="error-message">
+                {{ getErrorMessage('emailAddress') }}
+              </span>
+            </div>
+          </div>
+
+          <div class="billing-column">
+            <div class="form-group">
+              <label for="billingStreetAddress">Billing street address</label>
+              <input
+                type="text"
+                id="billingStreetAddress"
+                formControlName="billingStreetAddress"
+                class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="billingCityTown">Town/City</label>
+              <input
+                type="text"
+                id="billingCityTown"
+                formControlName="billingCityTown"
+                class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="billingPostcode">Postcode</label>
+              <input
+                type="text"
+                id="billingPostcode"
+                formControlName="billingPostcode"
+                class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group checkbox-single" [class.error]="isFieldInvalid('privacyAgreed')">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="privacyAgreed">
+            <span>
+              I agree with the <a href="/privacy-policy" target="_blank">Privacy Policy</a>
+              and Terms and Conditions on this page. <span class="required">*</span>
+            </span>
+          </label>
+          <span *ngIf="isFieldInvalid('privacyAgreed')" class="error-message">
+            You must agree to the privacy policy and terms to continue
+          </span>
+        </div>
+      </section>
+
+      <!-- Submit Button -->
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="btn btn-primary btn-large"
+          [disabled]="isSubmitting">
+          <span *ngIf="!isSubmitting">Send me my free quotation</span>
+          <span *ngIf="isSubmitting" class="submitting">
+            <span class="spinner-small"></span>
+            Sending...
+          </span>
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

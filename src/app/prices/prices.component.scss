@@ -562,6 +562,56 @@ $max-width: 1376px;
 }
 
 // ============================================================================
+// TOP PRICING NOTICE (Prominent but Professional)
+// ============================================================================
+
+.pricing-notice-top {
+  background: #fff9e6;
+  padding: 1.5rem 1.75rem;
+  border-radius: $radius-md;
+  border-left: 4px solid #f39c12;
+  box-shadow: $shadow-sm;
+  margin-bottom: 2rem;
+
+  @include respond-below($breakpoint-mobile) {
+    padding: 1.25rem 1rem;
+  }
+
+  strong {
+    display: block;
+    color: $text-dark;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+
+    @include respond-below($breakpoint-mobile) {
+      font-size: 1rem;
+    }
+  }
+
+  p {
+    color: $text-medium;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+
+    @include respond-below($breakpoint-mobile) {
+      font-size: 0.9rem;
+    }
+  }
+
+  a {
+    color: $primary-color;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// ============================================================================
 // DESKTOP/TABLET TABLE VIEW
 // ============================================================================
 
