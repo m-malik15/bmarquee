@@ -5,7 +5,7 @@
       <p class="cta-description">{{ cta.description }}</p>
     </div>
     <div class="cta-action">
-      <a [href]="cta.buttonLink" class="cta-button" (click)="$event.preventDefault()">
+      <a [routerLink]="['/free-quote']" class="cta-button">
         {{ cta.buttonText }}
       </a>
     </div>

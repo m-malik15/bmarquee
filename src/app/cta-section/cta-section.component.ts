@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 export interface CtaData {
   title: string;
@@ -11,7 +12,7 @@ export interface CtaData {
 @Component({
   selector: 'app-cta-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './cta-section.component.html',
   styleUrl: './cta-section.component.scss'
 })
