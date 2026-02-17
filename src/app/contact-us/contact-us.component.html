@@ -1,0 +1,129 @@
+<div class="contact-us-container">
+
+  <!-- Page Header -->
+  <header class="contact-header">
+    <div class="contact-header__inner">
+      <h1>Contact Us</h1>
+    </div>
+  </header>
+
+  <!-- Info Banner Row -->
+  <section class="info-banners">
+    <div class="info-banners__inner">
+      <div class="info-banner">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 11l3 3L22 4"/>
+          <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+        </svg>
+        <span>Quotation requests should be made <a routerLink="/free-quote">here</a>.</span>
+      </div>
+      <div class="info-banner">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7a2 2 0 011.72 2.02z"/>
+        </svg>
+        <span>Feel free to phone the office for any enquiries on <a href="tel:01417740830">0141 774 0830</a>.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content: Form + Map -->
+  <section class="contact-main">
+    <div class="contact-main__inner">
+
+      <!-- Left: Quick Contact Form -->
+      <div class="contact-form-panel">
+
+        <div class="quick-note">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          Quick questions only via the form below.
+        </div>
+
+        <!-- Success State -->
+        <div *ngIf="submitSuccess" class="form-success">
+          <div class="form-success__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20,6 9,17 4,12"/>
+            </svg>
+          </div>
+          <h3>Message Sent!</h3>
+          <p>Thank you for getting in touch. We'll respond as soon as possible.</p>
+          <button class="btn btn-secondary" (click)="resetForm()">Send Another Message</button>
+        </div>
+
+        <!-- Contact Form -->
+        <form *ngIf="!submitSuccess" [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate class="contact-form">
+
+          <div class="form-group" [class.error]="isInvalid('name')">
+            <label for="name">Name <span class="required">*</span></label>
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              class="form-control"
+              autocomplete="name">
+            <span *ngIf="isInvalid('name')" class="error-message">⚠ This field is required</span>
+          </div>
+
+          <div class="form-group" [class.error]="isInvalid('email')">
+            <label for="email">Email <span class="required">*</span></label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="form-control"
+              autocomplete="email">
+            <span *ngIf="isInvalid('email') && contactForm.get('email')?.hasError('required')" class="error-message">⚠ This field is required</span>
+            <span *ngIf="isInvalid('email') && contactForm.get('email')?.hasError('email')" class="error-message">⚠ Please enter a valid email address</span>
+          </div>
+
+          <div class="form-group" [class.error]="isInvalid('message')">
+            <label for="message">Message <span class="required">*</span></label>
+            <textarea
+              id="message"
+              formControlName="message"
+              class="form-control"
+              rows="6"
+              placeholder="Your question or message…"></textarea>
+            <span *ngIf="isInvalid('message')" class="error-message">⚠ This field is required</span>
+          </div>
+
+          <div *ngIf="submitError" class="alert-error">
+            <strong>⚠ Error:</strong> {{ submitError }}
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="isSubmitting">
+            <span *ngIf="!isSubmitting">Submit</span>
+            <span *ngIf="isSubmitting" class="submitting">
+              <span class="spinner-small"></span>
+              Sending…
+            </span>
+          </button>
+
+        </form>
+      </div>
+
+      <!-- Right: Map -->
+      <div class="map-panel">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2239.1!2d-4.1705!3d55.8579!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48884191cbe4fb4d%3A0x9d0d246e2ce49cbb!2s1%20Barlanark%20Ave%2C%20Springboig%2C%20Glasgow%20G32%200JR!5e0!3m2!1sen!2suk!4v1700000000000"
+          width="100%"
+          height="100%"
+          style="border:0; display:block;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Baillies Marquees - 1 Barlanark Avenue, Glasgow">
+        </iframe>
+      </div>
+
+    </div>
+  </section>
+
+</div>

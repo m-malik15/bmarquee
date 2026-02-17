@@ -132,9 +132,8 @@ $transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   .header-content {
     max-width: 1376px;
-    margin: 0 auto;
     padding: 1rem 2rem;
-    text-align: center;
+    text-align: left;
   }
 
   h1 {
@@ -149,8 +148,7 @@ $transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 1.125rem;
     line-height: 1.7;
     color: $text-light;
-    max-width: 900px;
-    margin: 0 auto;
+
   }
 
   @media (max-width: 768px) {

@@ -75,6 +75,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       } else if (item.slug === 'prices') {
         this.router.navigate(['/prices']);
       }
+       else if (item.slug === 'contact-us') {
+        this.router.navigate(['/contact-us']);
+      }
       // All other routes are disabled (do nothing)
     }
   }
