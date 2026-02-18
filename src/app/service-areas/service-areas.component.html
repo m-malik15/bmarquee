@@ -1,0 +1,114 @@
+<div class="service-areas-container">
+
+  <!-- Page Header -->
+  <header class="service-areas-header">
+    <div class="service-areas-header__inner">
+      <h1>Areas We Cover</h1>
+      <p class="header-intro">We provide professional marquee hire across central Scotland and beyond.</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <section class="service-areas-main">
+    <div class="service-areas-main__inner">
+
+      <!-- Map Column -->
+      <div class="map-column">
+        <div class="map-wrapper">
+          <!--
+            Replace src with your WordPress media URL, e.g.:
+            src="https://www.bailliesmarquees.co.uk/wp-content/uploads/your-map.png"
+            Or bind dynamically: [src]="mapImageUrl"
+          -->
+          <img
+            class="map-image"
+            src="assets/images/areas-map.png"
+            alt="Map of Scotland showing Baillies Marquees service areas"
+            loading="lazy">
+        </div>
+      </div>
+
+      <!-- Info Column -->
+      <div class="info-column">
+
+        <!-- Area Cards Grid -->
+        <div class="areas-grid">
+
+          <!-- Full coverage areas -->
+          <div
+            *ngFor="let area of fullCoverageAreas"
+            class="area-card area-card--full">
+            <div class="area-card__status area-card__status--full">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13">
+                <polyline points="20,6 9,17 4,12"/>
+              </svg>
+              Full coverage
+            </div>
+            <div class="area-card__body">
+              <div class="area-card__pin">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+              </div>
+              <h3>{{ area.name }}</h3>
+            </div>
+          </div>
+
+          <!-- Partial coverage areas -->
+          <div
+            *ngFor="let area of partialCoverageAreas"
+            class="area-card area-card--partial">
+            <div class="area-card__status area-card__status--partial">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              Partial coverage
+            </div>
+            <div class="area-card__body">
+              <div class="area-card__pin">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+              </div>
+              <h3>{{ area.name }}</h3>
+            </div>
+            <div class="area-card__exclusion">
+              <span class="exclusion__pill">Excluding</span>
+              <span class="exclusion__postcodes">{{ area.exclusion }}</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Notice Box -->
+        <div class="coverage-notice">
+          <div class="coverage-notice__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <p>Whilst these postcodes act as a guide to the areas we cover, we would be pleased to discuss your events outside these areas.</p>
+        </div>
+
+        <!-- CTA -->
+        <div class="areas-cta">
+          <p>Ready to get started? Request your free no-obligation quotation today.</p>
+          <div class="areas-cta__buttons">
+            <a routerLink="/free-quote" class="btn btn-primary">Get a Free Quote</a>
+            <a href="tel:01417740830" class="btn btn-secondary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7a2 2 0 011.72 2.02z"/>
+              </svg>
+              0141 774 0830
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>

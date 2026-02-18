@@ -8,6 +8,7 @@ import { PricesComponent } from './app/prices/prices.component';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { FreeQuoteComponent } from './app/free-quote/free-quote.component';
 import { ContactUsComponent } from './app/contact-us/contact-us.component';
+import { ServiceAreasComponent } from './app/service-areas/service-areas.component';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -17,6 +18,7 @@ bootstrapApplication(AppComponent, {
       { path: 'prices', component: PricesComponent },
       { path: 'free-quote', component: FreeQuoteComponent },
       { path: 'contact-us', component: ContactUsComponent },
+        { path: 'service-areas', component: ServiceAreasComponent },
       // { path: ':slug', component: homeComponent }
     ]),
     provideAnimations(),
