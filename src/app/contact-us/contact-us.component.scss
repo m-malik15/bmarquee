@@ -1,10 +1,12 @@
 // contact-us.component.scss
-// Matching Baillie's Marquees brand — mirrors free-quote.component.scss variables exactly
+// Variables and header structure identical to free-quote.component.scss
 
 // ============================================
-// VARIABLES — identical to free-quote theme
+// VARIABLES — exact match to free-quote
 // ============================================
 $primary-color:    #274f86;
+$primary-dark:     #1a3a1b;
+$primary-light:    #4a8a4c;
 $secondary-color:  #c2bee0;
 $accent-color:     #f76a0c;
 
@@ -18,354 +20,338 @@ $input-border:     #d1d1d1;
 $error-color:      #dc3545;
 $success-color:    #28a745;
 
-$background-light: #f0efee;   // matches site's grey background from screenshot
+$background-light: #f9f9f9;
 $background-white: #ffffff;
+$input-bg:         #fafafa;
 
 $border-radius:       6px;
 $border-radius-large: 10px;
 $box-shadow:          0 1px 3px rgba(0,0,0,0.08);
+$box-shadow-hover:    0 4px 12px rgba(0,0,0,0.12);
 $box-shadow-focus:    0 0 0 3px rgba($border-focus, 0.15);
 $transition-base:     all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
+$emergency-color:  #c0392b;
+$emergency-bg:     #fdf0ee;
+$emergency-border: #f5c6c0;
+
 // ============================================
-// CONTAINER
+// CONTAINER — matches .free-quote-container
 // ============================================
 .contact-us-container {
+  min-height: 100vh;
   background: $background-light;
+  padding: 3rem 0 4rem;
 }
 
 // ============================================
-// PAGE HEADER  — matches free-quote h1 style
+// CONTENT WRAPPER — matches .quote-content
+// ============================================
+.contact-content {
+  max-width: 1376px;
+  margin: 0 auto;
+  padding: 0 2rem;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
+}
+
+// ============================================
+// HEADER — exact match to .quote-header
 // ============================================
 .contact-header {
   background: $background-white;
-  padding: 2rem 0 1.5rem;
+  border-bottom: 3px solid $secondary-color;
+  margin-bottom: 3rem;
 
-  &__inner {
+  .header-content {
     max-width: 1376px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 1rem 2rem;
+    text-align: left;
   }
 
   h1 {
-    font-size: 2.25rem;
+    font-size: 2.50rem;
+    margin-bottom: 1rem;
+    color: $primary-color;
     font-weight: 700;
-    color: $primary-color;
+    letter-spacing: -0.5px;
+  }
+
+  .header-intro {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: $text-light;
     margin: 0;
-    letter-spacing: -0.3px;
-  }
-}
 
-// ============================================
-// INFO BANNERS
-// ============================================
-.info-banners {
-  background: $background-white;
-  padding: 0 0 2rem;
-
-  &__inner {
-    max-width: 1376px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-
-    @media (max-width: 640px) {
-      grid-template-columns: 1fr;
+    a {
+      color: $primary-color;
+      font-weight: 600;
+      text-decoration: underline;
+      &:hover { color: darken($primary-color, 10%); }
     }
   }
-}
 
-.info-banner {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 1.25rem;
-  background: lighten($secondary-color, 13%);
-  border: 1px solid lighten($secondary-color, 5%);
-  border-radius: $border-radius;
-  font-size: 0.9375rem;
-  color: $text-dark;
-  line-height: 1.5;
-
-  svg {
-    flex-shrink: 0;
-    color: $primary-color;
-  }
-
-  a {
-    color: $primary-color;
-    font-weight: 600;
-    text-decoration: underline;
-
-    &:hover {
-      color: darken($primary-color, 10%);
-    }
+  @media (max-width: 768px) {
+    .header-content { padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; }
+    .header-intro { font-size: 1rem; }
   }
 }
 
 // ============================================
-// MAIN SECTION — form + map side by side
+// CARD WRAP — matches .quote-form card
 // ============================================
-.contact-main {
-  padding: 2rem 0 3rem;
-
-  &__inner {
-    max-width: 1376px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    align-items: stretch;
-    min-height: 420px;
-
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-      min-height: auto;
-    }
-  }
-}
-
-// ============================================
-// FORM PANEL
-// ============================================
-.contact-form-panel {
+.contact-card-wrap {
   background: $background-white;
   border-radius: $border-radius-large;
-  box-shadow: $box-shadow;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
 
-.quick-note {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  padding: 0.875rem 1.5rem;
-  background: lighten($secondary-color, 13%);
-  border-bottom: 1px solid lighten($secondary-color, 5%);
-  font-size: 0.9375rem;
-  color: $text-dark;
-  font-weight: 500;
-
-  svg {
-    flex-shrink: 0;
-    color: $primary-color;
+  @media (max-width: 768px) {
+    border-radius: 0;
+    box-shadow: none;
   }
 }
 
-.contact-form {
-  padding: 1.75rem 1.5rem 2rem;
+// ============================================
+// MAIN INNER GRID
+// ============================================
+.contact-main__inner {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 768px) {
+    padding: 2rem 1.5rem;
+    gap: 1.5rem;
+  }
+}
+
+// ============================================
+// CONTACT DETAILS COLUMN
+// ============================================
+.contact-details-column {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  flex: 1;
 }
 
 // ============================================
-// FORM GROUPS & CONTROLS — mirrors free-quote
+// CONTACT CARD
 // ============================================
-.form-group {
+.contact-card {
+  border: 1.5px solid $border-color;
+  border-radius: $border-radius-large;
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 3px solid $secondary-color;
+    background: $background-white;
+
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: $primary-color;
+      margin: 0;
+      letter-spacing: -0.3px;
+    }
+  }
+
+  &__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: lighten($secondary-color, 12%);
+    color: $primary-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    svg { width: 18px; height: 18px; }
+  }
+
+  &__body {
+    padding: 1.25rem;
+    background: $background-white;
+  }
+}
+
+// ============================================
+// PHONE LIST
+// ============================================
+.phone-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
 
-  label {
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f0f0f0;
+
+    &:last-child { border-bottom: none; padding-bottom: 0; }
+    &:first-child { padding-top: 0; }
+  }
+
+  &__label {
+    font-size: 0.9rem;
     font-weight: 600;
-    color: $text-dark;
-    margin-bottom: 0.5rem;
-    font-size: 0.9375rem;
-    letter-spacing: 0.01em;
+    color: $text-light;
+  }
 
-    .required {
-      color: $error-color;
-      margin-left: 3px;
-      font-size: 1.1em;
+  &__number {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $primary-color;
+    text-decoration: none;
+    transition: $transition-base;
+
+    &:hover {
+      color: darken($primary-color, 10%);
+      text-decoration: underline;
     }
   }
 
-  &.error .form-control {
-    border-color: $error-color;
-    background: #fff5f5;
+  &__item--emergency {
+    background: $emergency-bg;
+    border: 1px solid $emergency-border !important;
+    border-radius: $border-radius;
+    padding: 0.75rem 0.875rem !important;
+    margin-top: 0.5rem;
 
-    &:focus {
-      border-color: darken($error-color, 5%);
-      box-shadow: 0 0 0 3px rgba($error-color, 0.1);
-      background: white;
+    .phone-list__number {
+      color: $emergency-color;
+      &:hover { color: darken($emergency-color, 10%); }
     }
   }
-
-  .error-message {
-    color: $error-color;
-    font-size: 0.875rem;
-    margin-top: 0.4rem;
-    font-weight: 500;
-  }
 }
 
-.form-control {
-  width: 100%;
-  padding: 0.875rem 1rem;
-  border: 2px solid $input-border;
-  border-radius: $border-radius;
-  font-size: 0.9375rem;
-  font-family: inherit;
-  transition: $transition-base;
-  background: $background-white;
-  color: $text-dark;
-  line-height: 1.5;
-  appearance: none;
-
-  &:hover {
-    border-color: darken($input-border, 10%);
-  }
-
-  &:focus {
-    outline: none;
-    border-color: $border-focus;
-    box-shadow: $box-shadow-focus;
-    background: $background-white;
-  }
-
-  &::placeholder {
-    color: #a0a0a0;
-    opacity: 1;
-  }
-}
-
-textarea.form-control {
-  resize: vertical;
-  min-height: 130px;
-  line-height: 1.6;
-  font-family: inherit;
-}
-
-// Alert
-.alert-error {
-  padding: 0.875rem 1.125rem;
-  background: #fff5f5;
-  border: 1px solid #feb2b2;
-  border-left: 4px solid $error-color;
-  border-radius: $border-radius;
-  font-size: 0.9rem;
-  color: #9b2c2c;
+.emergency-badge {
+  display: inline-flex;
+  align-items: center;
+  background: $emergency-color;
+  color: white;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 100px;
 }
 
 // ============================================
-// BUTTONS — exact mirror of free-quote buttons
+// EMAIL LINK
+// ============================================
+.email-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: $primary-color;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  background: lighten($secondary-color, 13%);
+  border: 1.5px solid lighten($secondary-color, 5%);
+  border-radius: $border-radius;
+  transition: $transition-base;
+
+  &:hover {
+    background: lighten($secondary-color, 9%);
+    border-color: $secondary-color;
+    color: darken($primary-color, 10%);
+  }
+}
+
+// ============================================
+// OFFICE HOURS
+// ============================================
+.office-hours {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: $text-dark;
+  font-weight: 500;
+}
+
+// ============================================
+// QUOTE CTA
+// ============================================
+.quote-cta {
+  background: $primary-color;
+  border-radius: $border-radius-large;
+  padding: 1.75rem;
+  box-shadow: 0 4px 16px rgba($primary-color, 0.25);
+
+  &__text {
+    margin-bottom: 1.25rem;
+
+    h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: white;
+      margin: 0 0 0.5rem;
+      letter-spacing: -0.3px;
+    }
+
+    p {
+      font-size: 0.9rem;
+      color: rgba(white, 0.82);
+      margin: 0;
+      line-height: 1.6;
+    }
+  }
+}
+
+// ============================================
+// BUTTONS — matches free-quote .btn exactly
 // ============================================
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.875rem 2rem;
+  padding: 1rem 2.5rem;
   border: none;
   border-radius: $border-radius;
   font-size: 1rem;
   font-weight: 600;
-  font-family: inherit;
+  text-decoration: none;
   cursor: pointer;
   transition: $transition-base;
-  text-decoration: none;
+  font-family: inherit;
+  gap: 0.625rem;
   letter-spacing: 0.02em;
+  width: 100%;
 
   &.btn-primary {
-    background: linear-gradient(135deg, $primary-color, darken($primary-color, 5%));
-    color: white;
-    box-shadow: 0 4px 12px rgba($primary-color, 0.25);
-
-    &:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba($primary-color, 0.35);
-      background: linear-gradient(135deg, darken($primary-color, 3%), darken($primary-color, 8%));
-    }
-
-    &:active:not(:disabled) {
-      transform: translateY(0);
-    }
-
-    &:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-      transform: none;
-    }
-  }
-
-  &.btn-secondary {
     background: white;
     color: $primary-color;
-    border: 2px solid $primary-color;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 
     &:hover {
-      background: $primary-color;
-      color: white;
+      background: lighten($secondary-color, 10%);
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba($primary-color, 0.25);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
     }
-  }
 
-  .submitting {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-  }
-
-  .spinner-small {
-    width: 16px;
-    height: 16px;
-    border: 2px solid rgba(255,255,255,0.35);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
-  }
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-// ============================================
-// SUCCESS STATE
-// ============================================
-.form-success {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 3rem 2rem;
-  gap: 1rem;
-
-  &__icon {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, $success-color, darken($success-color, 10%));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0.5rem;
-    box-shadow: 0 4px 12px rgba($success-color, 0.3);
-
-    svg { color: white; }
-  }
-
-  h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: $primary-color;
-    margin: 0;
-  }
-
-  p {
-    color: $text-light;
-    font-size: 1rem;
-    line-height: 1.6;
-    margin: 0;
+    &:active { transform: translateY(0); }
   }
 }
 
@@ -373,54 +359,42 @@ textarea.form-control {
 // MAP PANEL
 // ============================================
 .map-panel {
+  border: 1.5px solid $border-color;
   border-radius: $border-radius-large;
   overflow: hidden;
-  box-shadow: $box-shadow;
-  min-height: 400px;
 
-  iframe {
-    width: 100%;
-    height: 100%;
-    min-height: 400px;
-    display: block;
-    border: 0;
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 3px solid $secondary-color;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $text-dark;
+    background: $background-white;
+
+    svg { color: $primary-color; flex-shrink: 0; }
   }
 
-  @media (max-width: 768px) {
-    min-height: 300px;
+  .map-wrapper {
+    height: 520px;
 
     iframe {
-      min-height: 300px;
+      width: 100%;
+      height: 100%;
+      display: block;
+      border: 0;
     }
+
+    @media (max-width: 960px) { height: 380px; }
+    @media (max-width: 480px) { height: 280px; }
   }
 }
 
 // ============================================
-// RESPONSIVE
+// ACCESSIBILITY
 // ============================================
-@media (max-width: 768px) {
-  .contact-header h1 {
-    font-size: 1.75rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-header {
-    &__inner {
-      padding: 0 1rem;
-    }
-  }
-
-  .info-banners__inner,
-  .contact-main__inner,
-  .contact-footer-bar__inner {
-    padding: 0 1rem;
-  }
-}
-
-// Accessibility
-.form-control:focus,
-button:focus-visible {
-  outline: 2px solid $border-focus;
-  outline-offset: 2px;
+@media (prefers-reduced-motion: no-preference) {
+  * { scroll-behavior: smooth; }
 }
