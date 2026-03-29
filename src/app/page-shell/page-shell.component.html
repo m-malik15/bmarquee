@@ -1,0 +1,19 @@
+<!-- page-shell.component.html -->
+<div class="bm-page">
+
+  <div class="bm-page__card">
+
+    <!-- Header: title + optional intro — identical on every page -->
+    <header class="bm-page__header">
+      <h1>{{ title }}</h1>
+      <p *ngIf="intro" class="bm-page__intro" [innerHTML]="intro"></p>
+    </header>
+
+    <!-- Body: each page's unique content projected here -->
+    <div class="bm-page__body">
+      <ng-content></ng-content>
+    </div>
+
+  </div>
+
+</div>

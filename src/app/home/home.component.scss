@@ -1,133 +1,120 @@
-// page.component.scss
+// home.component.scss
+// Home is full-width (slider, CTA, clients) — does NOT use PageShellComponent.
+// Shell is for interior pages with a title header. Home has its own layout.
+@use '../style/bailles-base.scss' as *;
 
+// ── Page wrapper ──────────────────────────────────────────────────────────────
 .page-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem 0 2rem;
+  position: relative;
+  min-height: 60vh;
+  background: $bg-page;
+
+  // Dim content while loading
+  &.loading .page-wrapper {
+    opacity: 0.3;
+    pointer-events: none;
+  }
 }
 
-// ============================================
-// LOADING & ERROR STATES
-// ============================================
+.page-wrapper {
+  transition: opacity 0.3s ease;
+}
 
-.loading {
-  text-align: center;
-  padding: 4rem 2rem;
+// ── Loading overlay ───────────────────────────────────────────────────────────
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba($bg-white, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  gap: 1rem;
 
   .spinner {
     width: 50px;
     height: 50px;
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
+    border: 4px solid rgba($primary, 0.15);
+    border-top-color: $primary;
     border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 1rem;
+    animation: home-spin 0.8s linear infinite;
   }
 
   p {
-    color: #7f8c8d;
-    font-size: 1.1rem;
+    color: $primary;
+    font-weight: 500;
+    font-size: 1rem;
   }
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes home-spin {
+  to { transform: rotate(360deg); }
 }
 
+// ── Error state ───────────────────────────────────────────────────────────────
 .error {
   text-align: center;
   padding: 4rem 2rem;
 
   h2 {
-    color: #e74c3c;
+    color: $error-color;
     font-size: 2rem;
     margin-bottom: 1rem;
   }
 
   p {
-    color: #7f8c8d;
+    color: $text-light;
     margin-bottom: 2rem;
   }
 
   .btn-home {
-    display: inline-block;
-    padding: 0.75rem 2rem;
-    background: #3498db;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background 0.3s;
+    @extend %btn-base;
+    background: $primary;
+    color: $bg-white;
+    box-shadow: $shadow-primary;
 
     &:hover {
-      background: #2980b9;
+      background: $primary-dark;
+      transform: translateY(-2px);
     }
   }
 }
 
-// ============================================
-// PAGE LAYOUT
-// ============================================
-
-.page {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-.featured-image {
+// ── Slider — always full width ────────────────────────────────────────────────
+app-slider {
+  display: block;
   width: 100%;
-  max-height: 500px;
-  overflow: hidden;
+}
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+// ── Article — constrained centred column for cards + content ──────────────────
+.page {
+  max-width: $max-width;
+  margin: 0 auto;
+}
+
+// Shared inner container (cards section, page-content section)
+.container {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 $content-padding;
+
+  @include respond-below($bp-md) {
+    padding: 0 $content-padding-mobile;
   }
 }
 
-.page-header {
-  padding: 3rem 3rem 2rem;
-  border-bottom: 1px solid #ecf0f1;
-
-  h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #2c3e50;
-    margin: 0 0 1rem;
-    line-height: 1.2;
-  }
-
-  .page-meta {
-    color: #95a5a6;
-    font-size: 0.9rem;
-
-    time {
-      font-style: italic;
-    }
-  }
-}
-
-// ============================================
-// WORDPRESS CONTENT STYLES
-// ============================================
-
+// ── WordPress page content (rendered HTML from WP) ────────────────────────────
 .page-content {
-  padding: 0 3rem 0rem 3rem;
+  padding: 2rem 0;
   line-height: 1.8;
-  color: #34495e;
+  color: $text-medium;
   font-size: 1.05rem;
 
-  // Typography
-  p {
-    margin: 0 0 1.5rem;
-  }
+  p { margin: 0 0 1.5rem; }
 
   h2, h3, h4, h5, h6 {
-    color: #2c3e50;
+    color: $text-dark;
     font-weight: 600;
     margin: 2.5rem 0 1rem;
     line-height: 1.3;
@@ -139,163 +126,99 @@
   h5 { font-size: 1.1rem; }
   h6 { font-size: 1rem; }
 
-  // Links
   a {
-    color: #3498db;
+    color: $primary;
     text-decoration: none;
     border-bottom: 1px solid transparent;
-    transition: all 0.2s;
-
-    &:hover {
-      border-bottom-color: #3498db;
-      color: #2980b9;
-    }
+    transition: $transition-base;
+    &:hover { border-bottom-color: $primary; color: $primary-dark; }
   }
 
-  // Images
   img {
     max-width: 100%;
     height: auto;
-    border-radius: 4px;
+    border-radius: $radius-md;
     margin: 1.5rem 0;
     display: block;
   }
 
   figure {
     margin: 2rem 0;
-
-    img {
-      margin: 0;
-    }
-
+    img { margin: 0; }
     figcaption {
       text-align: center;
-      color: #95a5a6;
+      color: $text-muted;
       font-size: 0.9rem;
       margin-top: 0.75rem;
       font-style: italic;
     }
   }
 
-  // Lists
   ul, ol {
     margin: 1.5rem 0;
     padding-left: 2rem;
-
-    li {
-      margin-bottom: 0.75rem;
-      line-height: 1.6;
-    }
-
-    ul, ol {
-      margin: 0.5rem 0;
-    }
+    li { margin-bottom: 0.75rem; line-height: 1.6; }
+    ul, ol { margin: 0.5rem 0; }
   }
 
-  ul {
-    list-style-type: disc;
-  }
+  ul { list-style-type: disc; }
 
-  // Blockquotes
   blockquote {
-    border-left: 4px solid #3498db;
+    border-left: 4px solid $primary;
     padding: 1rem 0 1rem 1.5rem;
     margin: 2rem 0;
     font-style: italic;
-    color: #7f8c8d;
-    background: #f8f9fa;
-    border-radius: 0 4px 4px 0;
-
-    p:last-child {
-      margin-bottom: 0;
-    }
+    color: $text-light;
+    background: lighten($secondary, 13%);
+    border-radius: 0 $radius-md $radius-md 0;
+    p:last-child { margin-bottom: 0; }
   }
 
-  // Code
   code {
-    background: #f8f9fa;
+    background: lighten($secondary, 13%);
     padding: 0.2rem 0.4rem;
-    border-radius: 3px;
+    border-radius: $radius-sm;
     font-family: 'Courier New', Consolas, monospace;
     font-size: 0.9em;
-    color: #e74c3c;
+    color: $error-color;
   }
 
   pre {
-    background: #2c3e50;
+    background: $text-dark;
     color: #ecf0f1;
     padding: 1.5rem;
-    border-radius: 6px;
+    border-radius: $radius-lg;
     overflow-x: auto;
     margin: 2rem 0;
     line-height: 1.5;
-
-    code {
-      background: none;
-      padding: 0;
-      color: inherit;
-      font-size: 0.9rem;
-    }
+    code { background: none; padding: 0; color: inherit; font-size: 0.9rem; }
   }
 
-  // Tables
   table {
     width: 100%;
     border-collapse: collapse;
     margin: 2rem 0;
     overflow: hidden;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: $radius-lg;
+    box-shadow: $shadow-xs;
 
-    th, td {
-      padding: 1rem;
-      text-align: left;
-      border-bottom: 1px solid #ecf0f1;
-    }
-
-    th {
-      background: #34495e;
-      color: white;
-      font-weight: 600;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tr:nth-child(even) {
-      background: #f8f9fa;
-    }
-
-    tr:hover {
-      background: #ecf0f1;
-    }
+    th, td { padding: 1rem; text-align: left; border-bottom: 1px solid $border-color; }
+    th { background: $primary; color: $bg-white; font-weight: 600; }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) { background: rgba($primary, 0.03); }
+    tr:hover { background: rgba($primary, 0.07); }
   }
 
-  // Buttons
   .wp-block-button {
     margin: 1.5rem 0;
-
     a {
-      display: inline-block;
-      padding: 0.75rem 2rem;
-      background: #3498db;
-      color: white !important;
-      border-radius: 4px;
-      text-decoration: none;
-      border: none;
-      transition: all 0.3s;
-      font-weight: 500;
-
-      &:hover {
-        background: #2980b9;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
-      }
+      @extend %btn-base;
+      background: $primary;
+      color: $bg-white;
+      &:hover { background: $primary-dark; transform: translateY(-2px); box-shadow: $shadow-primary; }
     }
   }
 
-  // Columns
   .wp-block-columns {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -303,385 +226,21 @@
     margin: 2rem 0;
   }
 
-  // Separator
   hr {
     border: none;
-    border-top: 2px solid #ecf0f1;
+    border-top: 2px solid $border-color;
     margin: 3rem 0;
   }
-}
 
-// ============================================
-// RESPONSIVE
-// ============================================
-
-@media (max-width: 768px) {
-  .page-container {
-    padding: 1rem;
-  }
-
-  .page-header {
-    padding: 2rem 1.5rem 1.5rem;
-
-    h1 {
-      font-size: 1.75rem;
-    }
-  }
-
-  .page-content {
-    padding: 1.5rem;
+  @include respond-below($bp-md) {
     font-size: 1rem;
-
     h2 { font-size: 1.5rem; }
     h3 { font-size: 1.25rem; }
     h4 { font-size: 1.1rem; }
 
     table {
       font-size: 0.9rem;
-
-      th, td {
-        padding: 0.75rem 0.5rem;
-      }
+      th, td { padding: 0.75rem 0.5rem; }
     }
-  }
-
-  .featured-image {
-    max-height: 300px;
-  }
-}
-
-@media (max-width: 480px) {
-  .page-header h1 {
-    font-size: 1.5rem;
-  }
-
-  .page-content {
-    padding: 1rem;
-
-    h2 { font-size: 1.25rem; }
-  }
-}
-// page.component.scss
-
-.page-container {
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-// Loading & Error states remain the same...
-
-.page {
-  max-width: 1376px  !important;
-  margin: 0 auto;
-
-  .page-header {
-    padding: 3rem 2rem 2rem;
-    border-bottom: 1px solid #ecf0f1;
-
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #2c3e50;
-      margin: 0 0 1rem;
-      line-height: 1.2;
-    }
-
-    .page-meta {
-      color: #95a5a6;
-      font-size: 0.9rem;
-    }
-  }
-
-
-}
-
-// Slider at full width
-app-slider {
-  display: block;
-  width: 100%;
-  margin-bottom: 0;
-}
-
-@media (max-width: 768px) {
-  .page-header {
-    padding: 2rem 1.5rem 1.5rem !important;
-
-    h1 {
-      font-size: 1.75rem !important;
-    }
-  }
-
-  .page-content {
-    padding: 1.5rem !important;
-  }
-}
-
-
-// page.component.scss - Add these to existing styles
-
-.page-container {
-  position: relative;
-  min-height: 60vh;
-
-  &.loading {
-    .page-wrapper {
-      opacity: 0.3;
-      pointer-events: none;
-    }
-  }
-}
-
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.95);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-
-  .spinner {
-    width: 50px;
-    height: 50px;
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #6f42c1;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-
-  p {
-    margin-top: 1rem;
-    color: #6f42c1;
-    font-weight: 500;
-  }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.page-wrapper {
-  transition: opacity 0.3s ease;
-}
-.clients-accreditations-container {
-  width: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-.section-title {
-  font-size: 2rem;
-  font-weight: 600;
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 30px;
-}
-
-/* Clients Section */
-.clients-section {
-  background: linear-gradient(135deg, #b8b5d6 0%, #c9c6e3 100%);
-  padding: 60px 20px;
-  margin-bottom: 0;
-
-  .section-title {
-    color: #2c3e50;
-  }
-
-  .clients-image-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .clients-composite-image {
-      max-width: 100%;
-      height: auto;
-      width: auto;
-      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
-      transition: transform 0.3s ease;
-
-      &:hover {
-        transform: scale(1.02);
-      }
-    }
-  }
-
-  .clients-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(9, 1fr);
-      gap: 15px;
-    }
-
-    @media (min-width: 1024px) {
-      gap: 20px;
-    }
-  }
-
-  .client-logo {
-    background: white;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    aspect-ratio: 1;
-
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    img {
-      max-width: 100%;
-      max-height: 80px;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-    }
-  }
-}
-
-/* Accreditations Section */
-.accreditations-section {
-  background: linear-gradient(135deg, #d4d2e8 0%, #e3e1f0 100%);
-  padding: 60px 20px;
-
-  .section-title {
-    color: #2c3e50;
-  }
-
-  .accreditations-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .accreditation-item {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-
-    &:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    img {
-      max-width: 100%;
-      max-height: 200px;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      margin-bottom: 15px;
-    }
-
-    .accreditation-title {
-      text-align: center;
-      font-size: 0.95rem;
-      color: #555;
-      margin: 10px 0 0;
-      font-weight: 500;
-    }
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 767px) {
-  .clients-section {
-    padding: 40px 15px;
-
-    .clients-image-wrapper {
-      padding: 20px 10px;
-
-      .clients-composite-image {
-        width: 100%;
-      }
-    }
-
-    .clients-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .client-logo {
-      padding: 10px;
-
-      img {
-        max-height: 60px;
-      }
-    }
-  }
-
-  .accreditations-section {
-    padding: 40px 15px;
-
-    .accreditations-grid {
-      grid-template-columns: 1fr;
-      gap: 30px;
-    }
-  }
-
-  .section-title {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-  }
-}
-
-.page-wrapper {
-  .page {
-    .container {
-      // Inherits from global styles.css
-      // max-width: 1200px;
-      // margin: 0 auto;
-      // padding: 0 2rem;
-    }
-  }
-}
-
-// Ensure slider is full-width
-app-slider {
-  width: 100%;
-  display: block;
-}
-
-// Content spacing
-.page-content {
-  margin: 2rem 0;
-
-  // Override any WordPress content that might break alignment
-  img {
-    max-width: 100%;
-    height: auto;
   }
 }

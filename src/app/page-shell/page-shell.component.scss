@@ -1,0 +1,82 @@
+// page-shell.component.scss
+// THE single source of page layout truth for Baillies Marquees.
+// Every page uses <app-page-shell> — this file is the only place
+// the outer chrome (bg, header strip, body padding, max-width) is defined.
+@use '../style/bailles-base.scss' as *;
+
+
+:host { display: block; }
+
+// ── Grey page background ──────────────────────────────────────────────────────
+.bm-page {
+  min-height: 100vh;
+  background: $bg-page;
+  padding: 2rem $content-padding 4rem;
+
+  @include respond-below($bp-md) {
+    padding: 1.5rem $content-padding-mobile 3rem;
+  }
+}
+
+// ── Centred column — same max-width for both header and card ──────────────────
+.bm-page__card {
+  max-width: $max-width;
+  margin: 0 auto;
+}
+
+// ── Header — above the card, lavender bottom rule, then a gap ─────────────────
+.bm-page__header {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  border-bottom: 3px solid $secondary;
+  margin-bottom: 2rem;               // ← gap between rule and the card below
+
+  @include respond-below($bp-md) {
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.bm-page__header h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $primary;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+
+  @include respond-below($bp-md) { font-size: 1.75rem; }
+}
+
+.bm-page__intro {
+  font-size: 1rem;
+  color: $text-light;
+  margin: 0;
+  max-width: 700px;
+  line-height: 1.6;
+
+  @include respond-below($bp-md) { font-size: 0.95rem; }
+
+  a {
+    color: $primary;
+    font-weight: 600;
+    text-decoration: underline;
+    &:hover { color: $primary-dark; }
+  }
+}
+
+// ── Body — white rounded card sitting below the header ────────────────────────
+.bm-page__body {
+  background: $bg-white;
+  border-radius: $radius-xl;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  overflow: hidden;
+
+  @include respond-below($bp-md) {
+    border-radius: 0;
+    box-shadow: none;
+    padding: 1.5rem 1.25rem;
+  }
+}

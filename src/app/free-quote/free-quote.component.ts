@@ -3,10 +3,12 @@ import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+
 import { DomSanitizer, SafeHtml, Meta, Title } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { WordPressService2, WordPressPage } from '../services/wordpress.service.service';
+import { PageShellComponent } from '../page-shell/page-shell.component';
 
 interface QuoteFormData {
   // Event Details
@@ -41,7 +43,7 @@ interface QuoteFormData {
 @Component({
   selector: 'app-free-quote',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, PageShellComponent],
   templateUrl: './free-quote.component.html',
   styleUrl: './free-quote.component.scss',
   encapsulation: ViewEncapsulation.None,

@@ -6,6 +6,7 @@ import { DomSanitizer, SafeHtml, Meta, Title } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { WordPressService2, WordPressPage } from '../services/wordpress.service.service';
+import { PageShellComponent } from '../page-shell/page-shell.component';
 
 // Note: Make sure you have provideAnimations() in your app config or BrowserAnimationsModule imported
 
@@ -30,7 +31,7 @@ interface PricingTable {
 @Component({
   selector: 'app-prices',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, PageShellComponent],
   templateUrl: './prices.component.html',
   styleUrl: './prices.component.scss',
   encapsulation: ViewEncapsulation.None,

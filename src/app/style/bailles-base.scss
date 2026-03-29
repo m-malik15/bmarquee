@@ -1,0 +1,251 @@
+// _baillies-base.scss  —  src/styles/_baillies-base.scss
+// Single source of truth for all design tokens, mixins, and shared placeholders.
+// Import in every component: @use 'src/styles/baillies-base' as *;
+// =============================================================================
+
+// ── 1. DESIGN TOKENS ─────────────────────────────────────────────────────────
+
+$primary:          #274f86;
+$primary-dark:     #1c3a61;
+$primary-light:    #3a6ba8;
+$secondary:        #c2bee0;
+$accent:           #f76a0c;
+$emergency:        #c0392b;
+$emergency-bg:     #fdf0ee;
+$emergency-border: #f5c6c0;
+
+$text-dark:        #333333;
+$text-medium:      #555555;
+$text-light:       #666666;
+$text-muted:       #999999;
+
+$bg-page:          #f0efee;   // ← single page background, every page
+$bg-white:         #ffffff;
+
+$border-color:     #e0e0e0;
+$border-focus:     #2b6cb0;
+
+$error-color:      #dc3545;
+$success-color:    #28a745;
+$warning-bg:       #fff9e6;
+$warning-border:   #f39c12;
+
+$shadow-xs:        0 1px 3px rgba(0, 0, 0, 0.08);
+$shadow-sm:        0 2px 8px rgba(0, 0, 0, 0.10);
+$shadow-md:        0 4px 16px rgba(0, 0, 0, 0.12);
+$shadow-hover:     0 4px 12px rgba(0, 0, 0, 0.15);
+$shadow-primary:   0 4px 12px rgba($primary, 0.25);
+
+$radius-sm:        4px;
+$radius-md:        6px;
+$radius-lg:        10px;
+$radius-xl:        12px;
+$radius-pill:      100px;
+
+$transition-fast:  200ms ease;
+$transition-base:  all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+$max-width:              1376px;
+$content-padding:        2rem;
+$content-padding-mobile: 1rem;
+
+// ── 2. BREAKPOINTS & MIXINS ───────────────────────────────────────────────────
+
+$bp-sm:  480px;
+$bp-md:  768px;
+$bp-lg:  960px;
+$bp-xl:  1024px;
+
+@mixin respond-below($bp) {
+  @media (max-width: #{$bp - 1px}) { @content; }
+}
+
+@mixin respond-above($bp) {
+  @media (min-width: $bp) { @content; }
+}
+
+// ── 3. TYPOGRAPHY PLACEHOLDERS ────────────────────────────────────────────────
+
+%section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $primary;
+  margin: 0 0 1rem;
+  letter-spacing: -0.3px;
+}
+
+%card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $primary;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+%body-text {
+  font-size: 1rem;
+  color: $text-medium;
+  line-height: 1.6;
+  margin: 0 0 1rem;
+  &:last-child { margin-bottom: 0; }
+}
+
+%small-text {
+  font-size: 0.875rem;
+  color: $text-light;
+  line-height: 1.5;
+}
+
+%label-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: $text-light;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+// ── 4. BUTTON BASE ────────────────────────────────────────────────────────────
+
+%btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: $radius-md;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: $transition-base;
+  text-decoration: none;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.btn {
+  @extend %btn-base;
+
+  &.btn-primary {
+    background: linear-gradient(135deg, $primary, $primary-dark);
+    color: $bg-white;
+    box-shadow: $shadow-primary;
+    &:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba($primary, 0.35); color: $bg-white; }
+    &:active { transform: translateY(0); }
+  }
+
+  &.btn-secondary {
+    background: $bg-white;
+    color: $primary;
+    border: 2px solid $primary;
+    &:hover { background: $primary; color: $bg-white; transform: translateY(-2px); box-shadow: $shadow-primary; }
+    &:active { transform: translateY(0); }
+  }
+
+  &.btn-ghost {
+    background: rgba($bg-white, 0.12);
+    color: $bg-white;
+    border: 2px solid rgba($bg-white, 0.5);
+    &:hover { background: rgba($bg-white, 0.22); border-color: $bg-white; }
+  }
+
+  &.btn--full { width: 100%; }
+  &.btn--sm   { padding: 0.5rem 1rem; font-size: 0.875rem; }
+  &.btn--lg   { padding: 1rem 2.5rem; font-size: 1rem; }
+}
+
+// ── 5. CARD PLACEHOLDERS ──────────────────────────────────────────────────────
+
+%card {
+  background: $bg-white;
+  border: 1.5px solid $border-color;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-xs;
+  overflow: hidden;
+  transition: $transition-base;
+}
+
+%card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 3px solid $secondary;
+  background: $bg-white;
+}
+
+%card-body {
+  padding: 1.25rem;
+  background: $bg-white;
+}
+
+%card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: lighten($secondary, 12%);
+  color: $primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  svg { width: 18px; height: 18px; }
+}
+
+// ── 6. NOTICE BLOCKS ──────────────────────────────────────────────────────────
+
+%notice-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.125rem 1.375rem;
+  background: lighten($secondary, 12%);
+  border: 1px solid lighten($secondary, 4%);
+  border-left: 4px solid $primary;
+  border-radius: $radius-lg;
+  p { margin: 0; font-size: 0.9375rem; color: $text-dark; line-height: 1.6; }
+}
+
+%notice-warning {
+  background: $warning-bg;
+  padding: 1.5rem 1.75rem;
+  border-radius: $radius-lg;
+  border-left: 4px solid $warning-border;
+  box-shadow: $shadow-xs;
+  strong { display: block; color: $text-dark; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+  p      { color: $text-medium; margin: 0; font-size: 0.95rem; line-height: 1.6; }
+  a      { color: $primary; font-weight: 600; &:hover { text-decoration: underline; } }
+  @include respond-below($bp-md) { padding: 1.25rem 1rem; }
+}
+
+// ── 7. CTA BANNER ─────────────────────────────────────────────────────────────
+
+%cta-banner {
+  background: $primary;
+  padding: 2.5rem 2rem;
+  border-radius: $radius-lg;
+  text-align: center;
+  box-shadow: $shadow-sm;
+  color: $bg-white;
+  h2           { font-size: 1.75rem; font-weight: 700; color: $bg-white !important; margin-bottom: 0.75rem; }
+  > p          { font-size: 1rem; margin-bottom: 1.75rem; opacity: 0.92; }
+  .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  @include respond-below($bp-md) { padding: 2rem 1.5rem; h2 { font-size: 1.5rem; } }
+}
+
+// ── 8. ICON HELPERS ───────────────────────────────────────────────────────────
+
+%icon-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: $primary;
+  color: $bg-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  svg { width: 18px; height: 18px; }
+}
