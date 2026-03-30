@@ -1,55 +1,68 @@
 <div class="slider" *ngIf="images.length > 0">
-      <div class="slides" [style.transform]="'translateX(-' + (currentIndex * 100) + '%)'">
-        <div class="slide" *ngFor="let image of images">
-          <img
-            [src]="useSize === 'full' ? image.source_url : getSizedImage(image)"
-            [alt]="image.alt_text || image.title"
-            loading="lazy"
-          />
+  <div class="slides" [style.transform]="'translateX(-' + (currentIndex * 100) + '%)'">
+    <div
+      class="slide"
+      [class.slide--contain]="fitMode === 'contain'"
+      *ngFor="let image of images"
+    >
 
-          <!-- Text Overlay -->
-          <div class="slide-content" *ngIf="showCaptions && (image.caption || image.title)">
-            <h2 class="slide-title">{{ image.caption }}</h2>
-            <!-- <p class="slide-subtitle" *ngIf="image.caption && image.title">
-              {{ image.caption }}
-            </p> -->
-            <button class="slide-cta" *ngIf="showCta">
-              CLICK HERE FOR MORE INFO
-            </button>
-          </div>
-        </div>
-      </div>
+      <!-- Blurred backdrop: only rendered in contain mode to fill empty space -->
+      <img
+        *ngIf="fitMode === 'contain'"
+        class="slide-backdrop"
+        [src]="getImageSrc(image)"
+        [attr.aria-hidden]="true"
+        alt=""
+      />
 
-      <!-- Navigation Arrows -->
-      <button
-        class="arrow prev"
-        (click)="prev()"
-        *ngIf="images.length > 1"
-        aria-label="Previous slide"
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-      </button>
+      <!-- Main image -->
+      <img
+        class="slide-img"
+        [src]="getImageSrc(image)"
+        [alt]="image.alt_text || image.title"
+        loading="lazy"
+      />
 
-      <button
-        class="arrow next"
-        (click)="next()"
-        *ngIf="images.length > 1"
-        aria-label="Next slide"
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
-
-      <!-- Dots Navigation -->
-      <div class="dots" *ngIf="images.length > 1 && showDots">
-        <button
-          *ngFor="let image of images; let i = index"
-          [class.active]="i === currentIndex"
-          (click)="goToSlide(i)"
-          [attr.aria-label]="'Go to slide ' + (i + 1)"
-        ></button>
+      <!-- Text Overlay -->
+      <div class="slide-content" *ngIf="showCaptions && (image.caption || image.title)">
+        <h2 class="slide-title">{{ image.caption }}</h2>
+        <button class="slide-cta" *ngIf="showCta">
+          CLICK HERE FOR MORE INFO
+        </button>
       </div>
     </div>
+  </div>
+
+  <!-- Navigation Arrows -->
+  <button
+    class="arrow prev"
+    (click)="prev()"
+    *ngIf="images.length > 1"
+    aria-label="Previous slide"
+  >
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+
+  <button
+    class="arrow next"
+    (click)="next()"
+    *ngIf="images.length > 1"
+    aria-label="Next slide"
+  >
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+
+  <!-- Dots Navigation -->
+  <div class="dots" *ngIf="images.length > 1 && showDots">
+    <button
+      *ngFor="let image of images; let i = index"
+      [class.active]="i === currentIndex"
+      (click)="goToSlide(i)"
+      [attr.aria-label]="'Go to slide ' + (i + 1)"
+    ></button>
+  </div>
+</div>

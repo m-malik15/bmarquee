@@ -5,7 +5,7 @@ import { MediaItem } from '../services/wordpress.service.service';
 
 @Component({
   selector: 'app-slider',
- standalone: true,
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './slider.component.html',
   styleUrl: './slider.component.scss'
@@ -18,6 +18,13 @@ export class SliderComponent implements OnInit, OnDestroy {
   @Input() showDots = true;
   @Input() showCta = true;
   @Input() useSize: 'thumbnail' | 'medium' | 'large' | 'full' = 'large';
+  /**
+   * 'cover'   – image fills the slide, cropped as needed (original behaviour).
+   * 'contain' – image is shown at its original aspect ratio; empty space around
+   *             it is filled with a blurred, colour-matched backdrop derived from
+   *             the same image.
+   */
+  @Input() fitMode: 'cover' | 'contain' = 'cover';
 
   currentIndex = 0;
   private intervalId: any;
@@ -34,6 +41,10 @@ export class SliderComponent implements OnInit, OnDestroy {
 
   getSizedImage(image: MediaItem): string {
     return image.sizes[this.useSize]?.source_url || image.source_url;
+  }
+
+  getImageSrc(image: MediaItem): string {
+    return this.useSize === 'full' ? image.source_url : this.getSizedImage(image);
   }
 
   next() {
