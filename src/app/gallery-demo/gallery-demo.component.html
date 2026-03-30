@@ -1,0 +1,113 @@
+<!-- gallery-demo.component.html -->
+<app-page-shell
+  title="Marquee Gallery"
+  intro="Select a category below to browse our marquee styles and interior options.">
+
+  <!-- ── Demo notice banner ────────────────────────────────────────────────── -->
+  <div class="demo-banner">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+         width="18" height="18" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="8" x2="12" y2="12"/>
+      <line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    <span>
+      <strong>Design preview</strong> — this version uses professional stock photography
+      to demonstrate how the gallery will look with high-quality images.
+      <a routerLink="/gallery">View live gallery →</a>
+    </span>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       CATEGORY SELECTOR
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="cat-grid" role="tablist" aria-label="Marquee gallery categories">
+
+    <button
+      *ngFor="let cat of categories"
+      class="cat-card"
+      [class.cat-card--selected]="cat.id === activeId"
+      role="tab"
+      [attr.aria-selected]="cat.id === activeId"
+      [attr.aria-controls]="'panel-' + cat.id"
+      [id]="'tab-' + cat.id"
+      (click)="selectCategory(cat.id)">
+
+      <div class="cat-card__bg"
+           [style.backgroundImage]="'url(' + cat.coverImage + ')'">
+      </div>
+      <div class="cat-card__overlay"></div>
+      <div class="cat-card__content">
+        <div class="cat-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.75" width="14" height="14" aria-hidden="true">
+            <path [attr.d]="cat.icon"/>
+          </svg>
+        </div>
+        <span class="cat-card__label">{{ cat.label }}</span>
+      </div>
+      <div class="cat-card__badge" *ngIf="cat.id === activeId" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="3" width="10" height="10">
+          <polyline points="20,6 9,17 4,12"/>
+        </svg>
+      </div>
+
+    </button>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       GALLERY PANEL
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <div *ngIf="activeCategory" class="gallery-panel-wrap">
+
+    <div
+      *ngFor="let cat of categories"
+      class="gallery-panel"
+      [class.gallery-panel--visible]="cat.id === activeId"
+      role="tabpanel"
+      [id]="'panel-' + cat.id"
+      [attr.aria-labelledby]="'tab-' + cat.id"
+      [attr.hidden]="cat.id !== activeId ? '' : null">
+
+      <ng-container *ngIf="cat.id === activeId">
+
+        <div class="gallery-panel__header">
+          <h2 class="gallery-panel__title">{{ cat.label }}</h2>
+          <span class="gallery-panel__highlight">{{ cat.highlight }}</span>
+        </div>
+
+        <!-- Slider -->
+        <div class="gallery-slider-wrap">
+          <app-slider
+            [images]="cat.images"
+            [autoplay]="true"
+            [speed]="4500"
+            [showCaptions]="true"
+            [showDots]="true"
+            [showCta]="false"
+            [useSize]="'large'">
+          </app-slider>
+        </div>
+
+        <!-- Description + CTA -->
+        <div class="gallery-desc">
+          <div class="gallery-desc__body">
+            <p class="gallery-desc__text">{{ cat.description }}</p>
+          </div>
+          <a routerLink="/free-quote" class="btn btn-primary gallery-desc__cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" width="16" height="16">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+            </svg>
+            Get a Quote for {{ cat.label }}
+          </a>
+        </div>
+
+      </ng-container>
+    </div>
+
+  </div>
+
+</app-page-shell>

@@ -1,0 +1,130 @@
+<!-- gallery.component.html -->
+<app-page-shell
+  title="Marquee Gallery"
+  intro="Select a category below to browse our marquee styles and interior options.">
+
+  <!-- ── Loading ──────────────────────────────────────────────────────────── -->
+  <div *ngIf="isLoading" class="gal-loading">
+    <div class="gal-spinner"></div>
+    <p>Loading gallery...</p>
+  </div>
+
+  <!-- ── Error ────────────────────────────────────────────────────────────── -->
+  <div *ngIf="error && !isLoading" class="gal-error">
+    <p>{{ error }}</p>
+    <a routerLink="/contact-us" class="btn btn-secondary">Contact Us</a>
+  </div>
+
+  <ng-container *ngIf="!isLoading && !error">
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         CATEGORY SELECTOR — compact strip, all 8 in one row on desktop
+    ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="cat-grid" role="tablist" aria-label="Marquee gallery categories">
+
+      <button
+        *ngFor="let cat of categories"
+        class="cat-card"
+        [class.cat-card--selected]="cat.id === activeId"
+        [style.--cat-color]="cat.color"
+        role="tab"
+        [attr.aria-selected]="cat.id === activeId"
+        [attr.aria-controls]="'panel-' + cat.id"
+        [id]="'tab-' + cat.id"
+        (click)="selectCategory(cat.id)">
+
+        <!-- Background image from WP -->
+        <div
+          class="cat-card__bg"
+          [style.backgroundImage]="cat.coverImage ? 'url(' + cat.coverImage + ')' : 'none'">
+        </div>
+
+        <!-- Colour overlay — tinted with cat.color when no cover image -->
+        <div class="cat-card__overlay"
+             [style.backgroundColor]="cat.coverImage ? null : cat.color"></div>
+
+        <!-- Content -->
+        <div class="cat-card__content">
+          <div class="cat-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.75" width="14" height="14" aria-hidden="true">
+              <path [attr.d]="cat.icon"/>
+            </svg>
+          </div>
+          <span class="cat-card__label">{{ cat.label }}</span>
+        </div>
+
+        <!-- Selected tick -->
+        <div class="cat-card__badge" *ngIf="cat.id === activeId" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="3" width="10" height="10">
+            <polyline points="20,6 9,17 4,12"/>
+          </svg>
+        </div>
+
+      </button>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GALLERY PANEL
+    ═══════════════════════════════════════════════════════════════════════ -->
+    <div *ngIf="activeCategory" class="gallery-panel-wrap">
+
+      <div
+        *ngFor="let cat of categories"
+        class="gallery-panel"
+        [class.gallery-panel--visible]="cat.id === activeId"
+        role="tabpanel"
+        [id]="'panel-' + cat.id"
+        [attr.aria-labelledby]="'tab-' + cat.id"
+        [attr.hidden]="cat.id !== activeId ? '' : null">
+
+        <ng-container *ngIf="cat.id === activeId">
+
+          <!-- Panel heading -->
+          <div class="gallery-panel__header">
+            <h2 class="gallery-panel__title">{{ cat.label }}</h2>
+            <span class="gallery-panel__highlight">{{ cat.highlight }}</span>
+          </div>
+
+          <!-- No images message -->
+          <div *ngIf="!cat.images.length" class="gal-empty">
+            <p>No images found for this category yet.</p>
+          </div>
+
+          <!-- Slider -->
+          <div *ngIf="cat.images.length" class="gallery-slider-wrap">
+            <app-slider
+              [images]="cat.images"
+              [autoplay]="true"
+              [speed]="4500"
+              [showCaptions]="false"
+              [showDots]="true"
+              [showCta]="false"
+              [useSize]="'large'">
+            </app-slider>
+          </div>
+
+          <!-- Description + CTA -->
+          <div class="gallery-desc">
+            <div class="gallery-desc__body">
+              <p class="gallery-desc__text">{{ cat.description }}</p>
+            </div>
+            <a routerLink="/free-quote" class="btn btn-primary gallery-desc__cta">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" width="16" height="16">
+                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+              </svg>
+              Get a Quote for {{ cat.label }}
+            </a>
+          </div>
+
+        </ng-container>
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</app-page-shell>

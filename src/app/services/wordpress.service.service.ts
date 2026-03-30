@@ -220,6 +220,8 @@ export class WordPressService2 {
           canonical: page.link
         };
 
+        console.log('Extracted page data:', { page, sliderData, cleanContent, metaTags });
+
         return { page, sliderData, cleanContent, metaTags };
       })
     );

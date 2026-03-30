@@ -56,15 +56,25 @@ export class homeComponent implements OnInit, OnDestroy {
     private htmlParser: HtmlParserService
   ) { }
 
+  // ngOnInit() {
+  //   this.route.params
+  //     .pipe(takeUntil(this.destroy$))
+  //     .subscribe(params => {
+  //       const slug = params['slug'] || '';
+  //       this.loadPage(slug);
+  //       window.scrollTo({ top: 0, behavior: 'smooth' });
+  //     });
+  // }
+
   ngOnInit() {
-    this.route.params
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(params => {
-        const slug = params['slug'] || '';
-        this.loadPage(slug);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-  }
+  this.route.params
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(params => {
+      const slug = params['slug'] || this.router.url.replace(/^\/|\/$/g, '');
+      this.loadPage(slug);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
 
   ngOnDestroy() {
     this.destroy$.next();

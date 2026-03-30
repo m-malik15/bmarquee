@@ -1,0 +1,347 @@
+// wordpress-page.component.scss
+// Shell handles bg, header, card wrapper — this file only styles
+// the WP content body and the loading/error/cta states.
+@use '../style/bailles-base.scss' as *;
+
+// ── Loading ───────────────────────────────────────────────────────────────────
+.wp-loading {
+  min-height: 60vh;
+  background: $bg-page;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  p { color: $text-light; font-size: 1rem; }
+}
+
+.wp-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid rgba($primary, 0.15);
+  border-top-color: $primary;
+  border-radius: 50%;
+  animation: wp-spin 0.8s linear infinite;
+}
+
+@keyframes wp-spin { to { transform: rotate(360deg); } }
+
+// ── Error ─────────────────────────────────────────────────────────────────────
+.wp-error {
+  min-height: 60vh;
+  background: $bg-page;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+
+  &__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: lighten($secondary, 10%);
+    color: $primary;
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h2 { color: $text-dark; font-size: 1.75rem; }
+  p  { color: $text-light; }
+}
+
+// ── Featured image ────────────────────────────────────────────────────────────
+.wp-featured-image {
+  margin-bottom: 2rem;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-sm;
+  img { width: 100%; height: auto; max-height: 480px; object-fit: cover; display: block; }
+}
+
+// ── Bottom CTA ────────────────────────────────────────────────────────────────
+.wp-cta {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 2px solid lighten($secondary, 8%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+
+  p { margin: 0; font-size: 0.9375rem; color: $text-light; line-height: 1.5; flex: 1; min-width: 200px; }
+  &__buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; flex-shrink: 0; }
+
+  @include respond-below($bp-md) { flex-direction: column; align-items: stretch; &__buttons { flex-direction: column; } }
+}
+
+// =============================================================================
+// WORDPRESS / KADENCE CONTENT STYLES
+// ::ng-deep is needed because Angular doesn't scope styles into [innerHTML]
+// =============================================================================
+:host ::ng-deep .wp-content {
+  line-height: 1.8;
+  color: $text-medium;
+  font-size: 1rem;
+
+  // ── Standard WP headings ──
+  h1, h2, h3, h4, h5, h6 {
+    color: $text-dark;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 2rem 0 0.875rem;
+    &:first-child { margin-top: 0; }
+  }
+
+  h1 { font-size: 2rem;    color: $primary; }
+  h2 { font-size: 1.625rem; color: $primary; padding-bottom: 0.5rem; border-bottom: 2px solid lighten($secondary, 8%); }
+  h3 { font-size: 1.25rem; }
+  h4 { font-size: 1.1rem; }
+
+  p { margin: 0 0 1.25rem; &:last-child { margin-bottom: 0; } }
+
+  a { color: $primary; text-decoration: underline; text-underline-offset: 2px; &:hover { color: $primary-dark; } }
+
+  // ── Standard images ──
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: $radius-md;
+    margin: 1.5rem 0;
+  }
+
+  // ── Standard lists ──
+  ul, ol { margin: 1rem 0; padding-left: 1.5rem; li { margin-bottom: 0.5rem; } }
+  ul { list-style-type: disc; }
+
+  hr { border: none; border-top: 2px solid $border-color; margin: 2rem 0; }
+
+  // ── WP Gutenberg buttons ──
+  .wp-block-button__link,
+  .wp-element-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: $primary;
+    color: $bg-white !important;
+    border-radius: $radius-md;
+    text-decoration: none;
+    font-weight: 600;
+    transition: $transition-base;
+    &:hover { background: $primary-dark; }
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // KADENCE ACCORDION
+  // We've stripped Kadence's own <style> blocks. These rules re-implement
+  // the accordion appearance on-brand.
+  // ─────────────────────────────────────────────────────────────────────────
+
+  .kt-accordion-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  // Each collapsible pane
+  .kt-accordion-pane {
+    border: 1.5px solid $border-color;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    transition: $transition-base;
+
+    &:hover { border-color: lighten($primary, 20%); }
+  }
+
+  // Accordion button header
+  .kt-blocks-accordion-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.375rem;
+    background: $bg-white;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: $text-dark;
+    transition: $transition-base;
+
+    &:hover { background: lighten($secondary, 12%); color: $primary; }
+
+    // Active (open) state
+    &.kt-accordion-panel-active {
+      background: $primary;
+      color: $bg-white;
+
+      // Override the Kadence ::after/::before icon bars
+      .kt-blocks-accordion-icon-trigger {
+        background: $bg-white !important;
+        &::before, &::after { background: $bg-white !important; }
+      }
+    }
+  }
+
+  // Kadence accordion title text
+  .kt-blocks-accordion-title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+  }
+
+  // Kadence expand icon (CSS cross/minus)
+  .kt-blocks-accordion-icon-trigger {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    position: relative;
+    background: $primary !important;
+    border-radius: 50%;
+    margin-left: 1rem;
+
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      background: $bg-white !important;
+      border-radius: 2px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    // Horizontal bar
+    &::before { width: 8px; height: 2px; }
+    // Vertical bar (hidden when open)
+    &::after  { width: 2px; height: 8px; transition: transform 0.25s ease, opacity 0.25s ease; }
+  }
+
+  // When active, rotate vertical bar to make a minus
+  .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger::after {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  // Panel content — hidden by default via Kadence class
+  .kt-accordion-panel {
+    &.kt-accordion-panel-hidden {
+      display: none;
+    }
+  }
+
+  .kt-accordion-panel-inner {
+    padding: 1.25rem;
+    background: $bg-white !important;   // override any grey Kadence left behind
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // KADENCE GALLERY GRID
+  // The JS in ngAfterViewChecked sets grid inline styles but we also
+  // handle it in CSS as a fallback for cases where JS hasn't run yet.
+  // ─────────────────────────────────────────────────────────────────────────
+
+  .kb-gallery-type-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+
+    @include respond-below($bp-lg)  { grid-template-columns: repeat(2, 1fr); }
+    @include respond-below($bp-sm) { grid-template-columns: 1fr; }
+  }
+
+  // Each gallery item
+  .kadence-blocks-gallery-item {
+    list-style: none !important;
+    overflow: hidden;
+    border-radius: $radius-md;
+
+    &::marker { display: none; }
+  }
+
+  .kadence-blocks-gallery-item-inner {
+    position: relative;
+    overflow: hidden;
+    border-radius: $radius-md;
+  }
+
+  // The intrinsic ratio container — preserve aspect ratio
+  .kb-gallery-image-contain {
+    position: relative;
+    overflow: hidden;
+    border-radius: $radius-md;
+    background: $bg-page;
+
+    &.kb-gallery-image-ratio-land43,
+    &.kb-has-image-ratio-land43 {
+      padding-bottom: 75%;   // 4:3
+    }
+
+    &.kb-gallery-image-ratio-land32,
+    &.kb-has-image-ratio-land32 {
+      padding-bottom: 66.66%; // 3:2
+    }
+  }
+
+  .kb-gallery-image-contain img {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    border-radius: $radius-md;
+    margin: 0 !important;
+    transition: transform 0.3s ease;
+  }
+
+  // Gallery item hover effect
+  .kadence-blocks-gallery-item:hover .kb-gallery-image-contain img {
+    transform: scale(1.04);
+  }
+
+  // Gallery link wrapper
+  .kb-gallery-item-link {
+    display: block;
+    text-decoration: none;
+    border-radius: $radius-md;
+    overflow: hidden;
+  }
+
+  .kb-gal-image-radius {
+    border-radius: $radius-md;
+    overflow: hidden;
+    display: block;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // KADENCE WRAPPER CLEANUP
+  // Strip any remaining inline colours / backgrounds Kadence added
+  // ─────────────────────────────────────────────────────────────────────────
+
+  [class*="kb-gallery-wrap"],
+  [class*="kt-accordion-id"] {
+    background: none !important;
+    max-width: none !important;
+  }
+
+  // Responsiveness
+  @include respond-below($bp-md) {
+    font-size: 0.9375rem;
+    h1 { font-size: 1.625rem; }
+    h2 { font-size: 1.375rem; }
+
+    .kt-blocks-accordion-header { padding: 0.875rem 1rem; }
+    .kt-accordion-panel-inner   { padding: 1rem; }
+  }
+}

@@ -1,0 +1,35 @@
+<!-- wordpress-page.component.html -->
+
+<div *ngIf="isLoading" class="wp-loading">
+  <div class="wp-spinner"></div>
+  <p>Loading...</p>
+</div>
+
+<div *ngIf="error && !isLoading" class="wp-error">
+  <div class="wp-error__icon">!</div>
+  <h2>Page not found</h2>
+  <p>{{ error }}</p>
+  <a routerLink="/" class="btn btn-primary">Back to Home</a>
+</div>
+
+<app-page-shell
+  *ngIf="!isLoading && !error && page"
+  [title]="pageTitle"
+  [intro]="pageIntro">
+
+  <div *ngIf="featuredImageUrl" class="wp-featured-image">
+    <img [src]="featuredImageUrl" [alt]="pageTitle" loading="lazy">
+  </div>
+
+  <!-- WP / Kadence content injected here -->
+  <div class="wp-content" [innerHTML]="pageContent"></div>
+
+  <div class="wp-cta">
+    <p>Interested in hiring a marquee? Get in touch for a free, no-obligation quote.</p>
+    <div class="wp-cta__buttons">
+      <a routerLink="/free-quote" class="btn btn-primary">Get a Free Quote</a>
+      <a routerLink="/contact-us" class="btn btn-secondary">Contact Us</a>
+    </div>
+  </div>
+
+</app-page-shell>

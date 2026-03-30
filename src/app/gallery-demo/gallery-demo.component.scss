@@ -1,0 +1,262 @@
+// gallery-demo.component.scss
+// Shares all layout styles with gallery.component.scss.
+// Only addition: the demo notice banner at the top.
+@use '../style/bailles-base.scss' as *;
+
+// ── Demo notice banner ────────────────────────────────────────────────────────
+.demo-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  margin-bottom: 1.5rem;
+  background: $warning-bg;
+  border: 1px solid darken($warning-bg, 8%);
+  border-left: 4px solid $warning-border;
+  border-radius: 0 $radius-lg $radius-lg 0;
+  font-size: 0.875rem;
+  color: $text-medium;
+  line-height: 1.5;
+
+  svg { flex-shrink: 0; stroke: $warning-border; margin-top: 1px; }
+
+  strong { color: $text-dark; }
+
+  a {
+    color: $primary;
+    font-weight: 600;
+    text-decoration: underline;
+    &:hover { color: $primary-dark; }
+  }
+}
+
+// ── All shared styles below are identical to gallery.component.scss ───────────
+
+// ── Category grid ─────────────────────────────────────────────────────────────
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+
+  @include respond-below($bp-xl) { grid-template-columns: repeat(4, 1fr); }
+  @include respond-below($bp-md) { grid-template-columns: repeat(4, 1fr); gap: 0.375rem; }
+  @include respond-below($bp-sm) { grid-template-columns: repeat(4, 1fr); gap: 0.25rem; }
+}
+
+.cat-card {
+  position: relative;
+  height: 80px;
+  border: none;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  cursor: pointer;
+  background: $primary-dark;
+  padding: 0;
+  font-family: inherit;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: $shadow-md;
+    .cat-card__bg      { transform: scale(1.1); }
+    .cat-card__overlay { opacity: 0.5; }
+  }
+
+  &:focus-visible { outline: 3px solid $secondary; outline-offset: 2px; }
+
+  &--selected {
+    box-shadow: 0 0 0 2px $bg-white, 0 0 0 4px $primary;
+    transform: translateY(-2px);
+
+    .cat-card__overlay {
+      opacity: 0.78;
+      background: linear-gradient(135deg, rgba($primary-dark, 0.90), rgba($primary, 0.78));
+    }
+
+    .cat-card__icon {
+      background: $bg-white;
+      border-color: $bg-white;
+      svg { stroke: $primary; }
+    }
+
+    &:hover { transform: translateY(-4px); }
+  }
+}
+
+.cat-card__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.cat-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba($primary-dark, 0.62), rgba(0, 0, 0, 0.68));
+  opacity: 0.72;
+  transition: opacity 0.25s ease, background 0.25s ease;
+}
+
+.cat-card__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem 0.375rem;
+  text-align: center;
+}
+
+.cat-card__icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba($bg-white, 0.18);
+  border: 1px solid rgba($bg-white, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  flex-shrink: 0;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  svg { stroke: $bg-white; }
+}
+
+.cat-card__label {
+  font-size: 0.725rem;
+  font-weight: 700;
+  color: $bg-white;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  @include respond-below($bp-sm) { font-size: 0.65rem; }
+}
+
+.cat-card__badge {
+  position: absolute;
+  top: 0.375rem;
+  right: 0.375rem;
+  z-index: 3;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: $bg-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $shadow-xs;
+  svg { stroke: $primary; }
+}
+
+// ── Panel ─────────────────────────────────────────────────────────────────────
+.gallery-panel-wrap {
+  border-top: 2px solid lighten($secondary, 6%);
+  padding-top: 1.5rem;
+}
+
+.gallery-panel {
+  display: none;
+  &--visible { display: block; animation: gal-fade-in 0.35s ease; }
+}
+
+@keyframes gal-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.gallery-panel__header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.875rem;
+  flex-wrap: wrap;
+}
+
+.gallery-panel__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $primary;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.gallery-panel__highlight {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+// ── Slider ────────────────────────────────────────────────────────────────────
+.gallery-slider-wrap {
+  border-radius: $radius-xl;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  box-shadow: $shadow-md;
+
+  ::ng-deep .slider {
+    height: 500px !important;
+    min-height: 300px !important;
+    max-height: 500px !important;
+    border-radius: $radius-xl;
+
+    @include respond-below($bp-lg) { height: 420px !important; max-height: 420px !important; }
+    @include respond-below($bp-md) { height: 300px !important; max-height: 300px !important; }
+    @include respond-below($bp-sm) { height: 220px !important; max-height: 220px !important; }
+  }
+
+  ::ng-deep .slide-title {
+    font-size: 1.5rem !important;
+    @include respond-below($bp-md) { font-size: 1.125rem !important; }
+  }
+
+  ::ng-deep .slide::after {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.1) 45%,
+      transparent 100%
+    ) !important;
+    pointer-events: none;
+  }
+
+  ::ng-deep .slide-content {
+    top: auto !important;
+    bottom: 2rem !important;
+    transform: translateX(-50%) !important;
+    text-align: left !important;
+  }
+}
+
+// ── Description + CTA ─────────────────────────────────────────────────────────
+.gallery-desc {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.375rem 1.5rem;
+  background: lighten($secondary, 13%);
+  border-left: 4px solid $primary;
+  border-radius: 0 $radius-lg $radius-lg 0;
+  flex-wrap: wrap;
+
+  &__body  { flex: 1; min-width: 0; }
+  &__text  { margin: 0; font-size: 0.9rem; color: $text-medium; line-height: 1.65; }
+  &__cta   { flex-shrink: 0; }
+
+  @include respond-below($bp-md) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.125rem;
+    &__cta { width: 100%; justify-content: center; }
+  }
+}

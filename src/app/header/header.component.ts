@@ -81,6 +81,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
        else if (item.slug === 'marquee-hire-areas') {
         this.router.navigate(['/service-areas']);
       }
+        else {
+        this.router.navigate([`/${item.slug}`]);
+      }
       // All other routes are disabled (do nothing)
     }
   }
